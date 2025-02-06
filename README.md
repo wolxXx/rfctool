@@ -16,3 +16,8 @@ vote: entry_id, user_id, date, reason, result (-1,0,1) => -1 = rejected, 0 = neu
 group: name
 user_groups: group_id, user_id
 
+## setup
+
+- copy .env.dist to .env, adjust ports
+- exec docker web container docker exec -it rfctool-web bash
+    - php composer.phar install
