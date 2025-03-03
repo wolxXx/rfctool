@@ -31,9 +31,7 @@ services:
       retries: 10
       start_period: 10s
   web:
-    build:
-      context: ./
-      #no_cache: true
+    image: wolxxxy/php84:latest
     restart: always
     container_name: "rfctool-web"
     depends_on:
