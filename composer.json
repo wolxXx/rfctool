@@ -155,6 +155,7 @@
     "symfony/http-kernel": "*",
     "symfony/validator": "*",
     "symfony/yaml": "*",
+    "tarikweiss/slim-attribute-router": "*",
     "tecnickcom/tcpdf": "*",
     "tomloprod/colority": "*",
     "twbs/bootstrap": "*",
