@@ -1,4 +1,7 @@
 /.env
+/app.log
+/doctrineConfiguration.php
+
 
 /.idea/
 /docker-volumes/backups

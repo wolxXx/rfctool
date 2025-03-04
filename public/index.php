@@ -1,40 +1,74 @@
 <?php
+define(constant_name: 'STARTED', value: microtime(as_float: true));
+require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+chdir(directory: dirname(path: __DIR__));
+defined(constant_name: 'ROOT_DIR') || define(constant_name: 'ROOT_DIR', value: __DIR__ . DIRECTORY_SEPARATOR . '..');
 
-declare(strict_types=1);
+ini_set(option: 'xdebug.var_display_max_depth', value: 10);
+ini_set(option: 'xdebug.var_display_max_children', value: 100);
+ini_set(option: 'xdebug.var_display_max_data', value: 100);
 
-use DI\ContainerBuilder;
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Factory\AppFactory;
+ini_set(option: 'zend.exception_ignore_args', value: false);
 
-// Autoloader
-require __DIR__ . '/vendor/autoload.php';
+ini_set(option: 'opcache.memory_consumption', value: 2048);
+ini_set(option: 'opcache.interned_strings_buffer', value: 8);
+ini_set(option: 'opcache.max_accelerated_files', value: 4000);
+ini_set(option: 'opcache.revalidate_freq', value: 60);
+ini_set(option: 'opcache.enable_cli', value: 1);
+ini_set(option: 'opcache.enable', value: 0);
+ini_set(option: 'opcache.max_file_size', value: 1000);
+ini_set(option: 'opcache.file_cache_only', value: 1);
+ini_set(option: 'opcache.file_cache', value: ROOT_DIR . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . '.opcache');
 
-// Create Container using PHP-DI
-$containerBuilder = new ContainerBuilder();
+\RfcTool\Util\QueryLogger::$disabled = false;
+#\RfcTool\Util\QueryLogger::$disabled = true;
 
-// Add Container Definitions
-$containerBuilder->addDefinitions([
-    // Add any dependencies here, if required
-]);
+$app = \Slim\Factory\AppFactory::create();
+$app->addErrorMiddleware(displayErrorDetails: true, logErrors: true, logErrorDetails: true, logger: \RfcTool\Util\DependencyContainer::getInstance()->getLogger());
 
-// Build Container
-$container = $containerBuilder->build();
+$app->options(pattern: '/{routes:.+}', callable: function ($request, $response, $args) {
+    return $response;
+});
 
-// Set App Factory Container
-AppFactory::setContainer($container);
+$app->add(middleware: function ($request, $handler) {
+    $response = $handler->handle($request);
 
-// Create App
-$app = AppFactory::create();
+    return $response
+        ->withHeader('Access-Control-Allow-Origin', '*')
+        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+    ;
+});
+/*
+$router = new \Tarikweiss\SlimAttributeRouter\Router(
+    [ROOT_DIR . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Action'],
+    new \Tarikweiss\SlimAttributeRouter\PublicMethodRouteTargetCreator('direct')
+);
+$router->registerRoutes($app);*/
 
-// Define Routing Middleware
-$app->addRoutingMiddleware();
+$Directory = new \RecursiveDirectoryIterator(directory: \ROOT_DIR . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'Action');
+$Iterator  = new \RecursiveIteratorIterator(iterator: $Directory);
+$Regex     = new \RegexIterator(iterator: $Iterator, pattern: '/^.+\.php$/i', mode: \RegexIterator::GET_MATCH);
+foreach ($Regex as $files) {
+    foreach ($files as $file) {
+        $file  = \str_replace(search: \ROOT_DIR . \DIRECTORY_SEPARATOR . 'src', replace: '\\RfcTool', subject: $file);
+        $file  = \str_replace(search: '/', replace: '\\', subject: $file);
+        $file  = \str_replace(search: '.php', replace: '', subject: $file);
+        $class = $file;
+        if (false === \class_exists(class: $class)) {
+            continue;
+        }
+        $reflection = new \ReflectionClass(objectOrClass: $class);
+        $attributes = $reflection->getAttributes(name: \RfcTool\Attribute\Action\Route::class);
+        foreach ($attributes as $attribute) {
+            $className = $attribute->getName();
+            $app->map(methods: $attribute->getArguments()['methods'], pattern: $attribute->getArguments()['path'], callable: $class . ':direct');
+        }
+    }
+}
 
-// Error Middleware
-$app->addErrorMiddleware(true, true, true);
+$app->map(methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], pattern: '/{routes:.+}', callable: function ($request, $response): void {
+    throw new \Slim\Exception\HttpNotFoundException(request: $request);
+});
 
-// Define Routes
-$app->get('/', \App\Action\HomeAction::class . ':handle');
-
-// Run App
 $app->run();

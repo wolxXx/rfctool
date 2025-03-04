@@ -1,0 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+namespace RfcTool\Entity\Share;
+
+trait Blameable
+{
+    protected function onCreate($model): static
+    {
+        if (true === method_exists(object_or_class: $model, method: 'setCreatedBy')) {
+            $model->setCreatedBy($this->getUser());
+        }
+
+        return $this;
+    }
+
+    private function getUser(): string
+    {
+        $user = \RfcTool\Util\User\Current::get();
+        if (null === $user) {
+            return 'anonymous';
+        }
+
+        return $user->getName();
+    }
+
+    protected function onUpdate($model): static
+    {
+        if (true === method_exists(object_or_class: $model, method: 'setUpdatedBy')) {
+            $model->setUpdatedBy($this->getUser());
+        }
+
+        return $this;
+    }
+}
