@@ -1,40 +1,59 @@
 <?php
 
+declare(strict_types = 1);
 
-use Doctrine\ORM\Mapping as ORM;
+namespace RfcTool\Entity;
 
-#[ORM\Entity]
-#[ORM\Table(name: "entity_name")]
-class EntityName
+
+#[\Doctrine\ORM\Mapping\Entity(
+    repositoryClass: User\Repository::class
+)]
+#[\Doctrine\ORM\Mapping\Table(
+    name   : self::TABLE_NAME,
+    options: \RfcTool\Entity\Share\BaseTable::DEFAULT_OPTIONS,
+)]
+class User
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer")]
-    private int $id;
+    use \RfcTool\Entity\Share\Blame;
+    use \RfcTool\Entity\Share\Id;
+    use \RfcTool\Entity\Share\Repository;
+    use \RfcTool\Entity\Share\Timestamp;
 
-    #[ORM\Column(type: "string", length: 255)]
-    private string $name;
+    public const string TABLE_NAME = 'user';
 
-    #[ORM\Column(type: "string", length: 255, unique: true)]
-    private string $email;
+    #[\Doctrine\ORM\Mapping\Column(
+        type  : \Doctrine\DBAL\Types\Types::STRING,
+        length: 255
+    )]
+    protected string     $role;
 
-    #[ORM\Column(type: "string", length: 255, nullable: true)]
-    private ?string $createdBy;
+    #[\Doctrine\ORM\Mapping\Column(
+        type  : \Doctrine\DBAL\Types\Types::STRING,
+        length: 255
+    )]
+    protected string     $name;
 
-    #[ORM\Column(type: "string", length: 255, nullable: true)]
-    private ?string $updatedBy;
+    #[\Doctrine\ORM\Mapping\Column(
+        type  : \Doctrine\DBAL\Types\Types::STRING,
+        length: 255,
+        unique: true
+    )]
+    protected string     $email;
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'last_login',
+        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
+        nullable: true
+    )]
+    protected ?\DateTime $lastLogin = null;
+
 
     public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -46,33 +65,22 @@ class EntityName
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email): static
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getCreatedBy(): ?string
+
+    public function getLastLogin(): ?\DateTime
     {
-        return $this->createdBy;
+        return $this->lastLogin;
     }
 
-    public function setCreatedBy(?string $createdBy): self
+    public function setLastLogin(?\DateTime $lastLogin): static
     {
-        $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
-    public function getUpdatedBy(): ?string
-    {
-        return $this->updatedBy;
-    }
-
-    public function setUpdatedBy(?string $updatedBy): self
-    {
-        $this->updatedBy = $updatedBy;
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }

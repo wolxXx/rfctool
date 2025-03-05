@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace RfcTool\Entity;
 
-use RfcTool\Entity\Share\BaseTable;
 
 #[\Doctrine\ORM\Mapping\Entity(
     repositoryClass: Session\Repository::class
 )]
 #[\Doctrine\ORM\Mapping\Table(
     name   : self::TABLE_NAME,
-    options: BaseTable::DEFAULT_OPTIONS,
+    options: \RfcTool\Entity\Share\BaseTable::DEFAULT_OPTIONS,
 )]
 class Session
 {
