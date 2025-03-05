@@ -87,23 +87,44 @@ abstract class AbstractAction
 
     final public function init(): static
     {
+        /**
+         * @var \RfcTool\Attribute\Action\Route $attributeX
+         */
         $annotation = new \ReflectionClass(objectOrClass: $this);
         $attributes = $annotation->getAttributes(name: \RfcTool\Attribute\Action\Route::class);
         if (0 === count(value: $attributes)) {
             throw new \InvalidArgumentException(message: 'no route attribute detected!');
         }
-        foreach ($attributes as $attribute) {
-            /**
-             * @var \RfcTool\Attribute\Action\Route $attributeX
-             */
-            $attributeX = $attribute->newInstance();
-            if (true === $attributeX->authRequired && false === \RfcTool\Util\User\Current::isAuthenticated()) {
-                \RfcTool\Util\FlashMessenger::addDanger(message: $this->translator->loginRequired());
-                $this->redirect(to: \RfcTool\Action\Auth\LoginAction::getRoute());
 
-                return $this;
+        try {
+            $isAuthenticated      = \RfcTool\Util\User\Current::isAuthenticated();
+            foreach ($attributes as $attribute) {
+                $attributeX = $attribute->newInstance();
+                \RfcTool\Util\Debugger::debug($isAuthenticated);
+
+                foreach ($attributeX->roles as $role) {
+                    switch ($role) {
+                        case \RfcTool\Definition\User\Role::guest->value: {
+                            break 3;
+                        }
+                    }
+                    \RfcTool\Util\Debugger::debug($role);
+                }
+                \RfcTool\Util\Debugger::dieDebug('??');
+                if (true === $attributeX->authRequired && false === $isAuthenticated) {
+                    \RfcTool\Util\FlashMessenger::addDanger(message: $this->translator->loginRequired());
+                    $this->redirect(to: \RfcTool\Action\Auth\LoginAction::getRoute());
+
+                    return $this;
+                }
             }
+        } catch (\Throwable) {
+            \RfcTool\Util\FlashMessenger::addDanger(message: 'Login required');
+            $this->redirect(to: \RfcTool\Action\Auth\LoginAction::getRoute());
+
+            return $this;
         }
+
 
         $this->run();
 
@@ -138,7 +159,7 @@ abstract class AbstractAction
     }
 
     /**
-     * @param array<mixed> $data
+     * @param array $data
      */
     protected function render(string $script, array $data = []): \Psr\Http\Message\ResponseInterface
     {
