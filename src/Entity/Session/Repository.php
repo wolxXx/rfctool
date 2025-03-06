@@ -32,4 +32,39 @@ class Repository extends \Doctrine\ORM\EntityRepository
 
         return $this;
     }
+
+
+    public function create(\RfcTool\Entity\Session $entity): static
+    {
+        $this
+            ->onCreateTS(model: $entity)
+            ->onCreate(model: $entity)
+            ->getEntityManager()
+            ->persist(object: $entity)
+        ;
+
+        return $this;
+    }
+
+    public function update(\RfcTool\Entity\Session $entity): static
+    {
+        $this
+            ->onUpdate(model: $entity)
+            ->onUpdateTS(model: $entity)
+            ->getEntityManager()
+            ->persist(object: $entity)
+        ;
+
+        return $this;
+    }
+
+    public function delete(\RfcTool\Entity\Session $entity): static
+    {
+        $this
+            ->getEntityManager()
+            ->remove(object: $entity)
+        ;
+
+        return $this;
+    }
 }
