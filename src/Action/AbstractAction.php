@@ -97,26 +97,31 @@ abstract class AbstractAction
         }
 
         try {
-            $isAuthenticated      = \RfcTool\Util\User\Current::isAuthenticated();
+            $isAuthenticated = \RfcTool\Util\User\Current::isAuthenticated();
+            $user            = \RfcTool\Util\User\Current::get();
+            $allowed = false;
             foreach ($attributes as $attribute) {
                 $attributeX = $attribute->newInstance();
-                \RfcTool\Util\Debugger::debug($isAuthenticated);
-
                 foreach ($attributeX->roles as $role) {
                     switch ($role) {
                         case \RfcTool\Definition\User\Role::guest->value: {
+                            $allowed = true;
                             break 3;
                         }
+                        default: {
+                            if (false === $isAuthenticated) {
+                                continue 2;
+                            }
+                            if($user->getRole() === $role) {
+                                $allowed = true;
+                                break 3;
+                            }
+                        }
                     }
-                    \RfcTool\Util\Debugger::debug($role);
                 }
-                \RfcTool\Util\Debugger::dieDebug('??');
-                if (true === $attributeX->authRequired && false === $isAuthenticated) {
-                    \RfcTool\Util\FlashMessenger::addDanger(message: $this->translator->loginRequired());
-                    $this->redirect(to: \RfcTool\Action\Auth\LoginAction::getRoute());
-
-                    return $this;
-                }
+            }
+            if(false === $allowed) {
+                throw new \InvalidArgumentException();
             }
         } catch (\Throwable) {
             \RfcTool\Util\FlashMessenger::addDanger(message: 'Login required');
