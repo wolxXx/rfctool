@@ -15,7 +15,7 @@ enum Role: string
 
     case admin   = 'admin';
 
-    public const ALL = [
+    public const array ALL = [
         self::guest->value,
         self::user->value,
         self::manager->value,
