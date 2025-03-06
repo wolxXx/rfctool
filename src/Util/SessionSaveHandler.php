@@ -1,10 +1,11 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace RfcTool\Util;
 
-class SessionSaveHandler implements \SessionHandlerInterface
+class SessionSaveHandler implements
+    \SessionHandlerInterface
 {
     public static bool                    $SHALL_RUN = true;
 
@@ -20,7 +21,9 @@ class SessionSaveHandler implements \SessionHandlerInterface
 
     protected function findByName(string $name): ?\RfcTool\Entity\Session
     {
-        return \RfcTool\Entity\Session::getRepository()->findOneByName(name: $name);
+        return \RfcTool\Entity\Session::getRepository()
+                                      ->findOneByName(name: $name)
+        ;
     }
 
 
@@ -34,7 +37,9 @@ class SessionSaveHandler implements \SessionHandlerInterface
     {
         $entity = $this->findByName(name: $id);
         if (null !== $entity) {
-            \RfcTool\Entity\Session::getRepository()->delete(entity: $entity);
+            \RfcTool\Entity\Session::getRepository()
+                                   ->delete(entity: $entity)
+            ;
             $this
                 ->entityManager
                 ->flush()
@@ -47,7 +52,9 @@ class SessionSaveHandler implements \SessionHandlerInterface
 
     public function gc(int $max_lifetime): int|false
     {
-        \RfcTool\Entity\Session::getRepository()->garbageCollection(maxLifeTime: $max_lifetime);
+        \RfcTool\Entity\Session::getRepository()
+                               ->garbageCollection(maxLifeTime: $max_lifetime)
+        ;
 
         return 1;
     }
@@ -77,27 +84,36 @@ class SessionSaveHandler implements \SessionHandlerInterface
             $existing = $this->findByName(name: $id);
             if (null === $existing) {
                 $existing = new \RfcTool\Entity\Session();
-                $existing::getRepository()->create(entity: $existing);
+                $existing::getRepository()
+                         ->create(entity: $existing)
+                ;
             }
             $existing
                 ->setName(name: $id)
                 ->setContent(content: $data)
                 ->setExpires(expires: new \DateTime()
                                           ->add(interval: new \DateInterval(duration: 'PT1H'))
-                                          ->format(format: 'Y-m-d H:i:s')
+                                          ->format(format: 'Y-m-d H:i:s'),
                 )
                 ->setExpires(expires: new \DateTime()
-                                          ->format(format: 'Y-m-d H:i:s')
+                                          ->format(format: 'Y-m-d H:i:s'),
                 )
             ;
-            $existing::getRepository()->update(entity: $existing);
+            $existing::getRepository()
+                     ->update(entity: $existing)
+            ;
             $this
                 ->entityManager
                 ->flush()
             ;
+
             return true;
         } catch (\Exception $exception) {
-            DependencyContainer::getInstance()->getLogger()->emergency(message: 'cannot save session: ' . $exception->getMessage() . ' ' . $exception->getTraceAsString());
+            DependencyContainer::getInstance()
+                               ->getLogger()
+                               ->emergency(message: 'cannot save session: ' . $exception->getMessage() . ' ' . $exception->getTraceAsString())
+            ;
+
             return false;
         }
     }
