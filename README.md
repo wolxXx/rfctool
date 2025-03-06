@@ -19,5 +19,13 @@ user_groups: group_id, user_id
 ## setup
 
 - copy .env.dist to .env, adjust ports
+- copy configs/doctrine/docker.php to doctrineConfiguration.php
+  -  cp configs/doctrine/docker.php doctrineConfiguration.php
+- docker compose up -d --build --force-recreate --pull always
 - exec docker web container docker exec -it rfctool-web bash
-    - php composer.phar install
+  - mycli -uroot -proot -hmysql
+    - create database rfc_tool 
+  - ./composer.phar install
+  - ./composer.phar dbDry
+  - ./composer.phar dbFull
+- open browser http://localhost:8080 adjust port from .env file 

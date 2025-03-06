@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace RfcTool\Entity;
+namespace RfcTool\Entity\User;
 
 
 #[\Doctrine\ORM\Mapping\Entity(
-    repositoryClass: Session\Repository::class
+    repositoryClass: Credential\Repository::class
 )]
 #[\Doctrine\ORM\Mapping\Table(
     name   : self::TABLE_NAME,
     options: \RfcTool\Entity\Share\BaseTable::DEFAULT_OPTIONS,
 )]
-class Group
+class Credential
 {
     use \RfcTool\Entity\Share\Id;
     use \RfcTool\Entity\Share\Repository;
 
-    public const string TABLE_NAME = 'group';
+    public const string TABLE_NAME = 'user_credential';
 
 
     #[\Doctrine\ORM\Mapping\Column(
@@ -27,22 +27,29 @@ class Group
     protected string     $name;
 
     #[\Doctrine\ORM\Mapping\Column(
+        type  : \Doctrine\DBAL\Types\Types::STRING,
+        length: 255
+    )]
+    protected string     $type;
+
+    #[\Doctrine\ORM\Mapping\Column(
         type  : \Doctrine\DBAL\Types\Types::TEXT,
         length: 255,
         nullable: true
     )]
-    protected ?string     $description = null;
+    protected ?string     $note = null;
 
-    /**
-     * Many Users have Many Groups.
-     * @var \Doctrine\Common\Collections\Collection<int, Group>
-     */
-    #[\Doctrine\ORM\Mapping\ManyToMany(targetEntity: User::class, inversedBy: 'groups')]
-    #[\Doctrine\ORM\Mapping\JoinTable(name: 'users_groups')]
-    private \Doctrine\Common\Collections\Collection $users;
+
+    #[\Doctrine\ORM\Mapping\ManyToOne(
+        targetEntity: \RfcTool\Entity\User::class,
+    )]
+    #[\Doctrine\ORM\Mapping\JoinColumn(
+        nullable: false,
+        onDelete: 'CASCADE',
+    )]
+    protected \RfcTool\Entity\User $user;
 
     public function __construct() {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 

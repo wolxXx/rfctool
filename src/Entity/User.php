@@ -41,6 +41,12 @@ class User
     protected string     $email;
 
     #[\Doctrine\ORM\Mapping\Column(
+        type  : \Doctrine\DBAL\Types\Types::STRING,
+        length: 255
+    )]
+    protected string     $status;
+
+    #[\Doctrine\ORM\Mapping\Column(
         name    : 'last_login',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
@@ -57,6 +63,12 @@ class User
 
     public function __construct() {
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    public static function getRepository(): User\Repository
+    {
+        return static::getRepositoryByClassName();
     }
 
 
@@ -105,6 +117,18 @@ class User
     public function setRole(\RfcTool\Definition\User\Role $role): static
     {
         $this->role = $role->value;
+
+        return $this;
+    }
+
+    public function getStatus(): \RfcTool\Definition\User\Status
+    {
+        return \RfcTool\Definition\User\Status::from($this->status);
+    }
+
+    public function setStatus(\RfcTool\Definition\User\Status $status): static
+    {
+        $this->status = $status->value;
 
         return $this;
     }
