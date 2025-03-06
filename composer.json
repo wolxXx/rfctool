@@ -149,6 +149,8 @@
     "tomloprod/colority": "*",
     "twbs/bootstrap": "*",
     "web-auth/webauthn-lib": "*",
+    "wolxxx/xdebug-switcher": "*",
+    "wolxxx/chelsea": "*",
     "zircote/swagger-php": "*"
   }
 }
