@@ -1,65 +1,48 @@
 <?php
 
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
+declare(strict_types=1);
 
-#[ORM\Entity]
-#[ORM\Table(name: 'your_entity_name')]
-class YourEntity
+namespace RfcTool\Entity;
+
+
+#[\Doctrine\ORM\Mapping\Entity(
+    repositoryClass: Session\Repository::class
+)]
+#[\Doctrine\ORM\Mapping\Table(
+    name   : self::TABLE_NAME,
+    options: \RfcTool\Entity\Share\BaseTable::DEFAULT_OPTIONS,
+)]
+class Group
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
+    use \RfcTool\Entity\Share\Id;
+    use \RfcTool\Entity\Share\Repository;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private string $name;
+    public const string TABLE_NAME = 'group';
 
-    #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $description = null;
 
-    #[Gedmo\Blameable(on: 'create')]
-    #[ORM\Column(type: 'string', length: 255)]
-    private ?string $createdBy = null;
+    #[\Doctrine\ORM\Mapping\Column(
+        type  : \Doctrine\DBAL\Types\Types::STRING,
+        length: 255
+    )]
+    protected string     $name;
 
-    #[Gedmo\Blameable(on: 'update')]
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $updatedBy = null;
+    #[\Doctrine\ORM\Mapping\Column(
+        type  : \Doctrine\DBAL\Types\Types::TEXT,
+        length: 255,
+        nullable: true
+    )]
+    protected ?string     $description = null;
 
-    // Getters and setters for all properties
+    /**
+     * Many Users have Many Groups.
+     * @var \Doctrine\Common\Collections\Collection<int, Group>
+     */
+    #[\Doctrine\ORM\Mapping\ManyToMany(targetEntity: User::class, inversedBy: 'groups')]
+    #[\Doctrine\ORM\Mapping\JoinTable(name: 'users_groups')]
+    private \Doctrine\Common\Collections\Collection $users;
 
-    public function getId(): ?int
-    {
-        return $id;
+    public function __construct() {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): void
-    {
-        $this->description = $description;
-    }
-
-    public function getCreatedBy(): ?string
-    {
-        return $this->createdBy;
-    }
-
-    public function getUpdatedBy(): ?string
-    {
-        return $this->updatedBy;
-    }
 }

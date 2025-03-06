@@ -48,6 +48,18 @@ class User
     protected ?\DateTime $lastLogin = null;
 
 
+    /**
+     * Many Users have Many Groups.
+     * @var \Doctrine\Common\Collections\Collection<int, User>
+     */
+    #[\Doctrine\ORM\Mapping\ManyToMany(targetEntity: Group::class, mappedBy: 'users')]
+    private \Doctrine\Common\Collections\Collection $groups;
+
+    public function __construct() {
+        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
     public function getName(): string
     {
         return $this->name;
@@ -81,6 +93,18 @@ class User
     public function setLastLogin(?\DateTime $lastLogin): static
     {
         $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    public function getRole(): \RfcTool\Definition\User\Role
+    {
+        return \RfcTool\Definition\User\Role::from($this->role);
+    }
+
+    public function setRole(\RfcTool\Definition\User\Role $role): static
+    {
+        $this->role = $role->value;
 
         return $this;
     }
