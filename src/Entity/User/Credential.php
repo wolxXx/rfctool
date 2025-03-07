@@ -39,6 +39,13 @@ class Credential
     )]
     protected ?string     $note = null;
 
+    #[\Doctrine\ORM\Mapping\Column(
+        type  : \Doctrine\DBAL\Types\Types::TEXT,
+        length: 255,
+        nullable: true
+    )]
+    protected ?string     $password = null;
+
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \RfcTool\Entity\User::class,
@@ -53,9 +60,68 @@ class Credential
     }
 
 
-    public static function getRepository(): Group\Repository
+    public static function getRepository(): Credential\Repository
     {
         return static::getRepositoryByClassName();
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getType(): \RfcTool\Definition\User\CredentialType
+    {
+        return \RfcTool\Definition\User\CredentialType::from($this->type);
+    }
+
+    public function setType(\RfcTool\Definition\User\CredentialType $type): static
+    {
+        $this->type = $type->value;
+
+        return $this;
+    }
+
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    public function setNote(?string $note): static
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    public function getUser(): \RfcTool\Entity\User
+    {
+        return $this->user;
+    }
+
+    public function setUser(\RfcTool\Entity\User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(?string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
 }
