@@ -111,7 +111,7 @@ class User
 
     public function getRole(): \RfcTool\Definition\User\Role
     {
-        return \RfcTool\Definition\User\Role::from($this->role);
+        return \RfcTool\Definition\User\Role::from(value: $this->role);
     }
 
     public function setRole(\RfcTool\Definition\User\Role $role): static
@@ -123,7 +123,7 @@ class User
 
     public function getStatus(): \RfcTool\Definition\User\Status
     {
-        return \RfcTool\Definition\User\Status::from($this->status);
+        return \RfcTool\Definition\User\Status::from(value: $this->status);
     }
 
     public function setStatus(\RfcTool\Definition\User\Status $status): static

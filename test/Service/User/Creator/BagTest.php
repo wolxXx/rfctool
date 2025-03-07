@@ -6,25 +6,25 @@ class BagTest extends \PHPUnit\Framework\TestCase
 {
     public function testInstantiation()
     {
-        $this->assertInstanceOf(\RfcTool\Service\User\Creator\Bag::class, new \RfcTool\Service\User\Creator\Bag());
+        $this->assertInstanceOf(expected: \RfcTool\Service\User\Creator\Bag::class, actual: new \RfcTool\Service\User\Creator\Bag());
     }
 
     public function testPersistFlag()
     {
         $bag = new \RfcTool\Service\User\Creator\Bag();
-        $this->assertTrue($bag->shallPersist(), 'test default persist flag');
-        $this->assertFalse($bag->doPersist(false)->shallPersist());
-        $this->assertTrue($bag->doPersist(true)->shallPersist());
+        $this->assertTrue(condition: $bag->shallPersist(), message: 'test default persist flag');
+        $this->assertFalse(condition: $bag->doPersist(persist: false)->shallPersist());
+        $this->assertTrue(condition: $bag->doPersist(persist: true)->shallPersist());
     }
 
     public function testCredentials()
     {
         $bag = new \RfcTool\Service\User\Creator\Bag();
         $credentials = new \RfcTool\Service\User\Creator\CredentialList()
-            ->push(new \RfcTool\Service\User\Creator\CredentialBag())
+            ->push(item: new \RfcTool\Service\User\Creator\CredentialBag())
             ->push(new \RfcTool\Service\User\Creator\CredentialBag())
         ;
-        $bag->setCredentials($credentials);
-        $this->assertSame($credentials->count(), $bag->getCredentials()->count());
+        $bag->setCredentials(credentials: $credentials);
+        $this->assertSame(expected: $credentials->count(), actual: $bag->getCredentials()->count());
     }
 }

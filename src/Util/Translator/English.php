@@ -20,9 +20,9 @@ class English implements
             }
             case 'This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.':
             {
-                return str_replace('{{ limit }}', $args[0]['{{ limit }}'], 'This value is too long. It should have {{ limit }} character or less.');
+                return str_replace(search: '{{ limit }}', replace: $args[0]['{{ limit }}'], subject: 'This value is too long. It should have {{ limit }} character or less.');
             }
         }
-        throw new \InvalidArgumentException('Unknown translation: ' . $what);
+        throw new \InvalidArgumentException(message: 'Unknown translation: ' . $what);
     }
 }

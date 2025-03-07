@@ -13,51 +13,49 @@ class Command extends
 
     protected function configure(): void
     {
-        $this->setDescription('Initialize Application"');
+        $this->setDescription(description: 'Initialize Application"');
     }
 
     protected function execute(\Symfony\Component\Console\Input\InputInterface $input, \Symfony\Component\Console\Output\OutputInterface $output): int
     {
         $this->input  = $input;
         $this->output = $output;
-        $this->output->writeln('Hello, World!');
+        $this->output->writeln(messages: 'Hello, World!');
 
         $this->checkUsers();
-
 
         return static::SUCCESS;
     }
 
     protected function checkUsers(): void
     {
-
         $usersCount = \RfcTool\Entity\User::getRepository()
                                           ->count()
         ;
 
         if (0 !== $usersCount) {
-            $this->output->writeln('There are ' . $usersCount . ' users');
+            $this->output->writeln(messages: 'There are ' . $usersCount . ' users');
 
             return;
         }
-        $this->output->writeln('There are no users yet, creating first admin user.');
+        $this->output->writeln(messages: 'There are no users yet, creating first admin user.');
 
         $newUser = new \RfcTool\Service\User\Creator()
             ->do(
-                new \RfcTool\Service\User\Creator\Bag()
-                    ->setEmail('rfc@rfc.tool')
-                    ->setPersist(true)
-                    ->setName('RfcToolAdmin')
-                    ->setRole(\RfcTool\Definition\User\Role::admin)
-                    ->setStatus(\RfcTool\Definition\User\Status::active)
-                    ->setCredentials(
-                        new \RfcTool\Service\User\Creator\CredentialList()
-                            ->push(
-                                new \RfcTool\Service\User\Creator\CredentialBag()
-                                    ->setType(\RfcTool\Definition\User\CredentialType::password)
-                                    ->setPassword('initial password'),
-                            ),
-                    ),
+                bag: new \RfcTool\Service\User\Creator\Bag()
+                         ->setEmail(email: 'rfc@rfc.tool')
+                         ->setPersist(persist: true)
+                         ->setName(name: 'RfcToolAdmin')
+                         ->setRole(role: \RfcTool\Definition\User\Role::admin)
+                         ->setStatus(status: \RfcTool\Definition\User\Status::active)
+                         ->setCredentials(
+                             credentials: new \RfcTool\Service\User\Creator\CredentialList()
+                                              ->push(
+                                                  item: new \RfcTool\Service\User\Creator\CredentialBag()
+                                                            ->setType(type: \RfcTool\Definition\User\CredentialType::password)
+                                                            ->setPassword(password: 'initial password'),
+                                              ),
+                         ),
             )
         ;
 
@@ -65,9 +63,8 @@ class Command extends
     }
 }
 
-
 $command     = new Command();
 $application = new \Symfony\Component\Console\Application();
-$application->add($command);
-$application->setDefaultCommand($command->getName());
+$application->add(command: $command);
+$application->setDefaultCommand(commandName: $command->getName());
 $application->run();

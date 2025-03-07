@@ -79,7 +79,7 @@ class Credential
 
     public function getType(): \RfcTool\Definition\User\CredentialType
     {
-        return \RfcTool\Definition\User\CredentialType::from($this->type);
+        return \RfcTool\Definition\User\CredentialType::from(value: $this->type);
     }
 
     public function setType(\RfcTool\Definition\User\CredentialType $type): static

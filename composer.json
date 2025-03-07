@@ -20,7 +20,8 @@
     "optimize-autoloader": true,
     "secure-http": false,
     "allow-plugins": {
-      "mouf/nodejs-installer": true
+      "composer/installers": true,
+      "oomphinc/composer-installers-extender": true
     }
   },
   "scripts": {
@@ -28,21 +29,14 @@
     "paratestNoCoverage": "php scripts/prepareUnitTestDatabse.php && ./vendor/bin/paratest  --configuration test/phpunit.xml --display-incomplete --display-skipped --display-deprecations",
     "test": "php scripts/prepareUnitTestDatabse.php && XDEBUG_MODE=coverage  ./vendor/phpunit/phpunit/phpunit  --configuration test/phpunit.xml --coverage-html test/coverage --coverage-clover test/coverage/coverage.clover --display-incomplete --display-skipped --display-deprecations --testdox-html test/testdocs.html --testdox --cache-result",
     "testNoCoverage": "php scripts/prepareUnitTestDatabse.php && ./vendor/phpunit/phpunit/phpunit  --configuration test/phpunit.xml --testdox --cache-result",
-    "npm": "cd public && npm ci",
     "composerVendorPublic": "./install.sh",
-    "css": "php vendor/bin/pscss public/css/app.scss public/css/app.css",
-    "db": ["@dbSyncMetaData", "@listMigrations", "@executeMigrations", "@dbChanges"],
-    "dbFull": ["@dbChanges", "@dbMigrateLazy", "@markMigrationsExecuted", "@dbSyncMetaData", "@fixtures"],
-    "dbDry": ["@dbChanges", "@listMigrations"],
+    "db": ["@dbSyncMetaData", "@dbChanges"],
+    "dbFull": ["@dbChanges", "@dbSyncMetaData"],
+    "dbDry": ["@dbChanges"],
     "dbSyncMetaData": "./vendor/bin/doctrine-migrations migrations:sync-metadata-storage",
-    "dbMigrateLazy": "php bin/doctrine orm:schema-tool:update --force --verbose",
     "dbChanges": "php bin/doctrine orm:schema-tool:update --dump-sql --verbose",
-    "executeMigrations": "./vendor/bin/doctrine-migrations migrations:migrate --no-interaction --all-or-nothing",
-    "listMigrations": "./vendor/bin/doctrine-migrations migrations:list",
-    "generateMigration": "./vendor/bin/doctrine-migrations migrations:generate",
-    "markMigrationsExecuted": "php scripts/markMigrationsExecuted.php",
-    "fixtures": "php scripts/fixtures.php",
-    "post-install-cmd": ["@npm", "@composerVendorPublic", "@css"],
+    "rector": "./vendor/bin/rector",
+    "post-install-cmd": ["@composerVendorPublic", "./composer.phar audit"],
     "post-update-cmd": ["@post-install-cmd"]
   },
   "autoload": {
@@ -99,6 +93,7 @@
     "league/flysystem-replicate-adapter": "*",
     "league/oauth2-server": "*",
     "league/openapi-psr7-validator": "*",
+    "moment/moment": "*",
     "monolog/monolog": "*",
     "netresearch/jsonmapper": "*",
     "norkunas/onesignal-php-api": "*",
@@ -120,8 +115,10 @@
     "predis/predis": "*",
     "ramsey/uuid": "*",
     "rbdwllr/reallysimplejwt": "*",
+    "rector/rector": "*",
     "rotexsoft/versatile-collections": "*",
     "sabre/dav": "*",
+    "savinmikhail/add_named_arguments_rector": "*",
     "scssphp/scssphp": "1.*",
     "sebastian/diff": "*",
     "symplify/easy-coding-standard": "*",
