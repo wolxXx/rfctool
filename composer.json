@@ -120,6 +120,7 @@
     "predis/predis": "*",
     "ramsey/uuid": "*",
     "rbdwllr/reallysimplejwt": "*",
+    "rotexsoft/versatile-collections": "*",
     "sabre/dav": "*",
     "scssphp/scssphp": "1.*",
     "sebastian/diff": "*",

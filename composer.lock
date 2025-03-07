@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e8bdb135c3242351746d7808607bffa",
+    "content-hash": "f2ee82918b121fbde42963d37d9bd34f",
     "packages": [
         {
             "name": "amphp/amp",
@@ -143,16 +143,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.342.0",
+            "version": "3.342.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "5b8c837ab0c9754ab3408bd9afe6f0c67516b1fd"
+                "reference": "8a4ba50aa12ce509d0e598a7fd65d6b9309c39dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5b8c837ab0c9754ab3408bd9afe6f0c67516b1fd",
-                "reference": "5b8c837ab0c9754ab3408bd9afe6f0c67516b1fd",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8a4ba50aa12ce509d0e598a7fd65d6b9309c39dd",
+                "reference": "8a4ba50aa12ce509d0e598a7fd65d6b9309c39dd",
                 "shasum": ""
             },
             "require": {
@@ -234,9 +234,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.342.1"
             },
-            "time": "2025-03-05T19:20:14+00:00"
+            "time": "2025-03-06T19:17:36+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -4760,16 +4760,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "6.2.0",
+            "version": "6.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "460c0a09407f4d0d47679476745c4185ff0f1961"
+                "reference": "dff04e3c7c11451a6b4e30709e17c44526ebff73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/460c0a09407f4d0d47679476745c4185ff0f1961",
-                "reference": "460c0a09407f4d0d47679476745c4185ff0f1961",
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/dff04e3c7c11451a6b4e30709e17c44526ebff73",
+                "reference": "dff04e3c7c11451a6b4e30709e17c44526ebff73",
                 "shasum": ""
             },
             "require": {
@@ -4830,9 +4830,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jsonrainbow/json-schema/issues",
-                "source": "https://github.com/jsonrainbow/json-schema/tree/6.2.0"
+                "source": "https://github.com/jsonrainbow/json-schema/tree/6.2.1"
             },
-            "time": "2025-02-26T20:58:15+00:00"
+            "time": "2025-03-06T21:27:10+00:00"
         },
         {
             "name": "laminas/laminas-crypt",
@@ -9876,16 +9876,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.11",
+            "version": "11.5.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3946ac38410be7440186c6e74584f31b15107fc7"
+                "reference": "d42785840519401ed2113292263795eb4c0f95da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3946ac38410be7440186c6e74584f31b15107fc7",
-                "reference": "3946ac38410be7440186c6e74584f31b15107fc7",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d42785840519401ed2113292263795eb4c0f95da",
+                "reference": "d42785840519401ed2113292263795eb4c0f95da",
                 "shasum": ""
             },
             "require": {
@@ -9906,7 +9906,7 @@
                 "phpunit/php-timer": "^7.0.1",
                 "sebastian/cli-parser": "^3.0.2",
                 "sebastian/code-unit": "^3.0.2",
-                "sebastian/comparator": "^6.3.0",
+                "sebastian/comparator": "^6.3.1",
                 "sebastian/diff": "^6.0.2",
                 "sebastian/environment": "^7.2.0",
                 "sebastian/exporter": "^6.3.0",
@@ -9957,7 +9957,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.11"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.12"
             },
             "funding": [
                 {
@@ -9973,7 +9973,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-05T07:36:02+00:00"
+            "time": "2025-03-07T07:31:03+00:00"
         },
         {
             "name": "plasticbrain/php-flash-messages",
@@ -11840,6 +11840,70 @@
             "time": "2024-03-12T16:46:05+00:00"
         },
         {
+            "name": "rotexsoft/versatile-collections",
+            "version": "6.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rotexsoft/versatile-collections.git",
+                "reference": "49c6e9541873061d50b3630babf89e7205bbeff9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rotexsoft/versatile-collections/zipball/49c6e9541873061d50b3630babf89e7205bbeff9",
+                "reference": "49c6e9541873061d50b3630babf89e7205bbeff9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpunit/phpunit": "^10.0",
+                "rector/rector": "^1.0.0",
+                "vimeo/psalm": "^5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helper-functions.php"
+                ],
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Rotimi Adegbamigbe",
+                    "email": "rotexdegba007-github@yahoo.ca",
+                    "homepage": "https://github.com/rotexdegba",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A collection package that can be extended to implement things such as a Dependency Injection Container, RecordSet objects for housing database records, a bag of http cookies, or technically any collection of items that can be looped over and whose items can each be accessed using array-access syntax or object property syntax.",
+            "homepage": "https://github.com/rotexsoft/versatile-collections",
+            "keywords": [
+                "ArrayAccess",
+                "array",
+                "arrays",
+                "collection",
+                "collections",
+                "iterable",
+                "iterator",
+                "typed",
+                "typed collection",
+                "typed collections"
+            ],
+            "support": {
+                "issues": "https://github.com/rotexsoft/versatile-collections/issues",
+                "source": "https://github.com/rotexsoft/versatile-collections/tree/6.0.0"
+            },
+            "time": "2024-03-14T21:55:28+00:00"
+        },
+        {
             "name": "sabberworm/php-css-parser",
             "version": "v8.7.0",
             "source": {
@@ -12601,16 +12665,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "6.3.0",
+            "version": "6.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "d4e47a769525c4dd38cea90e5dcd435ddbbc7115"
+                "reference": "24b8fbc2c8e201bb1308e7b05148d6ab393b6959"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/d4e47a769525c4dd38cea90e5dcd435ddbbc7115",
-                "reference": "d4e47a769525c4dd38cea90e5dcd435ddbbc7115",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/24b8fbc2c8e201bb1308e7b05148d6ab393b6959",
+                "reference": "24b8fbc2c8e201bb1308e7b05148d6ab393b6959",
                 "shasum": ""
             },
             "require": {
@@ -12629,7 +12693,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "6.2-dev"
+                    "dev-main": "6.3-dev"
                 }
             },
             "autoload": {
@@ -12669,7 +12733,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
                 "security": "https://github.com/sebastianbergmann/comparator/security/policy",
-                "source": "https://github.com/sebastianbergmann/comparator/tree/6.3.0"
+                "source": "https://github.com/sebastianbergmann/comparator/tree/6.3.1"
             },
             "funding": [
                 {
@@ -12677,7 +12741,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-06T10:28:19+00:00"
+            "time": "2025-03-07T06:57:01+00:00"
         },
         {
             "name": "sebastian/complexity",
@@ -18210,16 +18274,16 @@
         },
         {
             "name": "wolxxx/xdebug-switcher",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wolxXx/xdebug-switcher.git",
-                "reference": "4e3bf803b6f0cc73220f95870066d03896d897ba"
+                "reference": "143fa04b9bd54aea8a3a677187b44519c18ffb5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wolxXx/xdebug-switcher/zipball/4e3bf803b6f0cc73220f95870066d03896d897ba",
-                "reference": "4e3bf803b6f0cc73220f95870066d03896d897ba",
+                "url": "https://api.github.com/repos/wolxXx/xdebug-switcher/zipball/143fa04b9bd54aea8a3a677187b44519c18ffb5c",
+                "reference": "143fa04b9bd54aea8a3a677187b44519c18ffb5c",
                 "shasum": ""
             },
             "type": "library",
@@ -18237,9 +18301,9 @@
             "support": {
                 "email": "devops@wolxxx.de",
                 "issues": "https://github.com/wolxXx/xdebug-switcher/issues",
-                "source": "https://github.com/wolxXx/xdebug-switcher/tree/1.0.0"
+                "source": "https://github.com/wolxXx/xdebug-switcher/tree/1.1.0"
             },
-            "time": "2025-03-06T06:15:35+00:00"
+            "time": "2025-03-06T08:36:06+00:00"
         },
         {
             "name": "zircote/swagger-php",
