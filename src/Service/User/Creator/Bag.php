@@ -1,23 +1,40 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace RfcTool\Service\User\Creator;
 
 final class Bag
 {
+    private bool                            $persist = true;
+
     private string                          $name;
 
     private string                          $email;
 
     private \RfcTool\Definition\User\Role   $role;
 
-    private \RfcTool\Definition\User\Status $status = \RfcTool\Definition\User\Status::invited;
+    private \RfcTool\Definition\User\Status $status  = \RfcTool\Definition\User\Status::invited;
 
-    /**
-     * @var CredentialBag[]
-     */
-    private array $credentials = [];
+    private CredentialList $credentials;
+
+    public function __construct()
+    {
+        $this->credentials = new CredentialList();
+    }
+
+    public function shallPersist(): bool
+    {
+        return $this->persist;
+    }
+
+    public function doPersist(bool $persist): Bag
+    {
+        $this->persist = $persist;
+
+        return $this;
+    }
+
 
     public function getName(): string
     {
@@ -67,36 +84,26 @@ final class Bag
         return $this;
     }
 
-    /**
-     * @return CredentialBag[]
-     */
-    public function getCredentials(): array
+    public function isPersist(): bool
+    {
+        return $this->persist;
+    }
+
+    public function setPersist(bool $persist): Bag
+    {
+        $this->persist = $persist;
+
+        return $this;
+    }
+
+    public function getCredentials(): CredentialList
     {
         return $this->credentials;
     }
 
-    public function setCredentials(array $credentials): Bag
+    public function setCredentials(CredentialList $credentials): Bag
     {
-        $this->credentials = [];
-        foreach ($credentials as $credential) {
-            $this->addCredential($credential);
-        }
-
-        return $this;
-    }
-
-    public function addCredentials(array $credentials): Bag
-    {
-        foreach ($credentials as $credential) {
-            $this->addCredential($credential);
-        }
-
-        return $this;
-    }
-
-    public function addCredential(CredentialBag $bag): Bag
-    {
-        $this->credentials[] = $bag;
+        $this->credentials = $credentials;
 
         return $this;
     }
