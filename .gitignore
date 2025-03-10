@@ -1,9 +1,13 @@
 /.env
 /app.log
 /doctrineConfiguration.php
+/structure.dump
 
 
 /.idea/
+/cache
 /docker-volumes/backups
 /public/vendor
+/test/.phpunit.cache
+/test/coverage
 /vendor/
