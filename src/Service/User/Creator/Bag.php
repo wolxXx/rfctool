@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace RfcTool\Service\User\Creator;
 
@@ -16,11 +16,11 @@ final class Bag
 
     private \RfcTool\Definition\User\Status $status  = \RfcTool\Definition\User\Status::invited;
 
-    private CredentialList $credentials;
+    private array                           $credentials;
 
     public function __construct()
     {
-        $this->credentials = new CredentialList();
+        $this->credentials = [];
     }
 
     public function shallPersist(): bool
@@ -34,7 +34,6 @@ final class Bag
 
         return $this;
     }
-
 
     public function getName(): string
     {
@@ -96,14 +95,27 @@ final class Bag
         return $this;
     }
 
-    public function getCredentials(): CredentialList
+    /**
+     * @return CredentialBag[]
+     */
+    public function getCredentials(): array
     {
         return $this->credentials;
     }
 
-    public function setCredentials(CredentialList $credentials): Bag
+    public function setCredentials(array $credentials): Bag
     {
-        $this->credentials = $credentials;
+        $this->credentials = [];
+        foreach ($credentials as $credential) {
+            $this->addCredential($credential);
+        }
+
+        return $this;
+    }
+
+    public function addCredential(CredentialBag $bag): Bag
+    {
+        $this->credentials[] = $bag;
 
         return $this;
     }

@@ -20,11 +20,10 @@ class BagTest extends \PHPUnit\Framework\TestCase
     public function testCredentials()
     {
         $bag = new \RfcTool\Service\User\Creator\Bag();
-        $credentials = new \RfcTool\Service\User\Creator\CredentialList()
-            ->push(item: new \RfcTool\Service\User\Creator\CredentialBag())
-            ->push(new \RfcTool\Service\User\Creator\CredentialBag())
-        ;
+        $credentials = [];
+        $credentials[] = new \RfcTool\Service\User\Creator\CredentialBag();
+        $credentials[] = new \RfcTool\Service\User\Creator\CredentialBag();
         $bag->setCredentials(credentials: $credentials);
-        $this->assertSame(expected: $credentials->count(), actual: $bag->getCredentials()->count());
+        $this->assertSame(expected: \count($credentials), actual: \count($bag->getCredentials()));
     }
 }

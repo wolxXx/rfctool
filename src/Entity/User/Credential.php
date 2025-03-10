@@ -47,6 +47,15 @@ class Credential
     protected ?string     $password = null;
 
 
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'last_used',
+        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
+        nullable: true
+    )]
+    protected ?\DateTime $lastUsed = null;
+
+
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \RfcTool\Entity\User::class,
     )]
@@ -121,6 +130,18 @@ class Credential
     public function setPassword(?string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getLastUsed(): ?\DateTime
+    {
+        return $this->lastUsed;
+    }
+
+    public function setLastUsed(?\DateTime $lastUsed): static
+    {
+        $this->lastUsed = $lastUsed;
 
         return $this;
     }

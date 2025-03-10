@@ -40,26 +40,31 @@ class Command extends
         }
         $this->output->writeln(messages: 'There are no users yet, creating first admin user.');
 
-        $newUser = new \RfcTool\Service\User\Creator()
+        $email    = 'rfc@rfc.tool';
+        $name     = 'RfcToolAdmin';
+        $password = 'initial password';
+        $newUser  = new \RfcTool\Service\User\Creator()
             ->do(
                 bag: new \RfcTool\Service\User\Creator\Bag()
-                         ->setEmail(email: 'rfc@rfc.tool')
                          ->setPersist(persist: true)
-                         ->setName(name: 'RfcToolAdmin')
+                         ->setEmail(email: $email)
+                         ->setName(name: $name)
                          ->setRole(role: \RfcTool\Definition\User\Role::admin)
                          ->setStatus(status: \RfcTool\Definition\User\Status::active)
                          ->setCredentials(
-                             credentials: new \RfcTool\Service\User\Creator\CredentialList()
-                                              ->push(
-                                                  item: new \RfcTool\Service\User\Creator\CredentialBag()
-                                                            ->setType(type: \RfcTool\Definition\User\CredentialType::password)
-                                                            ->setPassword(password: 'initial password'),
-                                              ),
+                             credentials: [
+                                              new \RfcTool\Service\User\Creator\CredentialBag()
+                                                  ->setType(type: \RfcTool\Definition\User\CredentialType::password)
+                                                  ->setPassword(password: $password),
+                                          ],
                          ),
             )
         ;
 
-        \RfcTool\Util\Debugger::dieDebug($newUser->getId(), $newUser->getName());
+        $this->output->writeln(messages: 'Added initial user:');
+        $this->output->writeln(messages: 'Name: ' . $name);
+        $this->output->writeln(messages: 'E-Mail: ' . $email);
+        $this->output->writeln(messages: 'Password: ' . $password);
     }
 }
 

@@ -31,7 +31,7 @@
     "testNoCoverage": "php scripts/prepareUnitTestDatabse.php && ./vendor/phpunit/phpunit/phpunit  --configuration test/phpunit.xml --testdox --cache-result",
     "composerVendorPublic": "./install.sh",
     "db": ["@dbSyncMetaData", "@dbChanges"],
-    "dbFull": ["@dbChanges", "@dbSyncMetaData"],
+    "dbFull": ["@dbChanges", "php bin/doctrine orm:schema-tool:update --force --verbose", "@dbSyncMetaData"],
     "dbDry": ["@dbChanges"],
     "dbSyncMetaData": "./vendor/bin/doctrine-migrations migrations:sync-metadata-storage",
     "dbChanges": "php bin/doctrine orm:schema-tool:update --dump-sql --verbose",
