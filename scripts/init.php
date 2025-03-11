@@ -43,7 +43,7 @@ class Command extends
         $email    = 'rfc@rfc.tool';
         $name     = 'RfcToolAdmin';
         $password = 'initial password';
-        $newUser  = new \RfcTool\Service\User\Creator()
+        new \RfcTool\Service\User\Creator()
             ->do(
                 bag: new \RfcTool\Service\User\Creator\Bag()
                          ->setPersist(persist: true)
