@@ -26,117 +26,123 @@ class Proposal
         type  : \Doctrine\DBAL\Types\Types::STRING,
         length: 255
     )]
-    protected string     $title;
+    protected string                                       $title;
 
     #[\Doctrine\ORM\Mapping\Column(
-        type  : \Doctrine\DBAL\Types\Types::STRING,
-        length: 255
+        name    : 'status',
+        type    : \Doctrine\DBAL\Types\Types::STRING,
+        enumType: \RfcTool\Definition\Proposal\Status::class,
     )]
-    protected string     $status;
+    protected \RfcTool\Definition\Proposal\Status          $status;
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'calculation_base',
+        type    : \Doctrine\DBAL\Types\Types::STRING,
+        enumType: \RfcTool\Definition\Proposal\CalculationBase::class,
+    )]
+    protected \RfcTool\Definition\Proposal\CalculationBase $calculationBase;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'vote_start',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime $voteStart = null;
+    protected ?\DateTime                                   $voteStart = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'vote_end',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime $voteEnd = null;
-
-
+    protected ?\DateTime                                   $voteEnd   = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \RfcTool\Entity\Group::class,
     )]
     #[\Doctrine\ORM\Mapping\JoinColumn(
-        name: 'group_id',
+        name    : 'group_id',
         nullable: false,
         onDelete: 'CASCADE',
     )]
-    protected \RfcTool\Entity\Group $group {
-        get {
-            if ($this->modified) {
-                return $this->foo . ' (modified)';
-            }
-            return $this->foo;
-        }
-        set(\RfcTool\Definition\User\CredentialType $value) {
-            $this->foo = strtolower($value->value);
-        }
-    }
+    protected \RfcTool\Entity\Group                        $group;
 
-    public function __construct() {
-    }
+    public function __construct() {}
 
 
-    public static function getRepository(): User\Repository
+    public static function getRepository(): Proposal\Repository
     {
         return static::getRepositoryByClassName();
     }
 
 
-    public function getName(): string
+    public function getTitle(): string
     {
-        return $this->name;
+        return $this->title;
     }
 
-    public function setName(string $name): static
+    public function setTitle(string $title): Proposal
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
 
-    public function getEmail(): string
+    public function getCalculationBase(): \RfcTool\Definition\Proposal\CalculationBase
     {
-        return $this->email;
+        return $this->calculationBase;
     }
 
-    public function setEmail(string $email): static
+    public function setCalculationBase(\RfcTool\Definition\Proposal\CalculationBase $calculationBase): Proposal
     {
-        $this->email = $email;
+        $this->calculationBase = $calculationBase;
 
         return $this;
     }
 
-
-    public function getLastLogin(): ?\DateTime
+    public function getVoteStart(): ?\DateTime
     {
-        return $this->lastLogin;
+        return $this->voteStart;
     }
 
-    public function setLastLogin(?\DateTime $lastLogin): static
+    public function setVoteStart(?\DateTime $voteStart): Proposal
     {
-        $this->lastLogin = $lastLogin;
+        $this->voteStart = $voteStart;
 
         return $this;
     }
 
-    public function getRole(): \RfcTool\Definition\User\Role
+    public function getVoteEnd(): ?\DateTime
     {
-        return \RfcTool\Definition\User\Role::from(value: $this->role);
+        return $this->voteEnd;
     }
 
-    public function setRole(\RfcTool\Definition\User\Role $role): static
+    public function setVoteEnd(?\DateTime $voteEnd): Proposal
     {
-        $this->role = $role->value;
+        $this->voteEnd = $voteEnd;
 
         return $this;
     }
 
-    public function getStatus(): \RfcTool\Definition\User\Status
+    public function getGroup(): Group
     {
-        return \RfcTool\Definition\User\Status::from(value: $this->status);
+        return $this->group;
     }
 
-    public function setStatus(\RfcTool\Definition\User\Status $status): static
+    public function setGroup(Group $group): Proposal
     {
-        $this->status = $status->value;
+        $this->group = $group;
+
+        return $this;
+    }
+
+    public function getStatus(): \RfcTool\Definition\Proposal\Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(\RfcTool\Definition\Proposal\Status $status): Proposal
+    {
+        $this->status = $status;
 
         return $this;
     }
