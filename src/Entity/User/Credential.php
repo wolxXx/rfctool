@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace RfcTool\Entity\User;
 
-
 #[\Doctrine\ORM\Mapping\Entity(
     repositoryClass: Credential\Repository::class
 )]
@@ -19,42 +18,39 @@ class Credential
 
     public const string TABLE_NAME = 'user_credential';
 
-
     #[\Doctrine\ORM\Mapping\Column(
         type  : \Doctrine\DBAL\Types\Types::STRING,
         length: 255
     )]
-    protected string     $name;
+    protected string                                  $name;
 
     #[\Doctrine\ORM\Mapping\Column(
-        type  : \Doctrine\DBAL\Types\Types::STRING,
-        length: 255
+        name    : 'type',
+        type    : \Doctrine\DBAL\Types\Types::STRING,
+        enumType: \RfcTool\Definition\User\CredentialType::class,
     )]
-    protected string     $type;
+    protected \RfcTool\Definition\User\CredentialType $type;
 
     #[\Doctrine\ORM\Mapping\Column(
-        type  : \Doctrine\DBAL\Types\Types::TEXT,
-        length: 255,
+        type    : \Doctrine\DBAL\Types\Types::TEXT,
+        length  : 255,
         nullable: true
     )]
-    protected ?string     $note = null;
+    protected ?string              $note     = null;
 
     #[\Doctrine\ORM\Mapping\Column(
-        type  : \Doctrine\DBAL\Types\Types::TEXT,
-        length: 255,
+        type    : \Doctrine\DBAL\Types\Types::TEXT,
+        length  : 255,
         nullable: true
     )]
-    protected ?string     $password = null;
-
-
+    protected ?string              $password = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'last_used',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime $lastUsed = null;
-
+    protected ?\DateTime           $lastUsed = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \RfcTool\Entity\User::class,
@@ -64,10 +60,6 @@ class Credential
         onDelete: 'CASCADE',
     )]
     protected \RfcTool\Entity\User $user;
-
-    public function __construct() {
-    }
-
 
     public static function getRepository(): Credential\Repository
     {
@@ -88,12 +80,12 @@ class Credential
 
     public function getType(): \RfcTool\Definition\User\CredentialType
     {
-        return \RfcTool\Definition\User\CredentialType::from(value: $this->type);
+        return $this->type;
     }
 
     public function setType(\RfcTool\Definition\User\CredentialType $type): static
     {
-        $this->type = $type->value;
+        $this->type = $type;
 
         return $this;
     }
