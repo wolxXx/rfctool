@@ -1,9 +1,8 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace RfcTool\Entity;
-
 
 #[\Doctrine\ORM\Mapping\Entity(
     repositoryClass: User\Repository::class
@@ -25,52 +24,52 @@ class User
         type  : \Doctrine\DBAL\Types\Types::STRING,
         length: 255
     )]
-    protected string     $role;
+    protected string                          $role;
 
     #[\Doctrine\ORM\Mapping\Column(
         type  : \Doctrine\DBAL\Types\Types::STRING,
         length: 255
     )]
-    protected string     $name;
+    protected string                          $name;
 
     #[\Doctrine\ORM\Mapping\Column(
         type  : \Doctrine\DBAL\Types\Types::STRING,
         length: 255,
         unique: true
     )]
-    protected string     $email;
+    protected string                          $email;
 
     #[\Doctrine\ORM\Mapping\Column(
-        type  : \Doctrine\DBAL\Types\Types::STRING,
-        length: 255
+        name    : 'status',
+        type    : \Doctrine\DBAL\Types\Types::STRING,
+        enumType: \RfcTool\Definition\User\Status::class,
     )]
-    protected string     $status;
+    protected \RfcTool\Definition\User\Status $status;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'last_login',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime $lastLogin = null;
-
+    protected ?\DateTime                      $lastLogin = null;
 
     /**
      * Many Users have Many Groups.
+     *
      * @var \Doctrine\Common\Collections\Collection<int, User>
      */
     #[\Doctrine\ORM\Mapping\ManyToMany(targetEntity: Group::class, mappedBy: 'users')]
     private \Doctrine\Common\Collections\Collection $groups;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     public static function getRepository(): User\Repository
     {
         return static::getRepositoryByClassName();
     }
-
 
     public function getName(): string
     {
@@ -95,7 +94,6 @@ class User
 
         return $this;
     }
-
 
     public function getLastLogin(): ?\DateTime
     {
@@ -123,12 +121,12 @@ class User
 
     public function getStatus(): \RfcTool\Definition\User\Status
     {
-        return \RfcTool\Definition\User\Status::from(value: $this->status);
+        return $this->status;
     }
 
     public function setStatus(\RfcTool\Definition\User\Status $status): static
     {
-        $this->status = $status->value;
+        $this->status = $status;
 
         return $this;
     }
