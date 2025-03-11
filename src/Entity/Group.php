@@ -6,7 +6,7 @@ namespace RfcTool\Entity;
 
 
 #[\Doctrine\ORM\Mapping\Entity(
-    repositoryClass: Session\Repository::class
+    repositoryClass: Group\Repository::class
 )]
 #[\Doctrine\ORM\Mapping\Table(
     name   : self::TABLE_NAME,
