@@ -20,7 +20,8 @@ class Command extends
     {
         $this->input  = $input;
         $this->output = $output;
-        $this->output->writeln(messages: 'Hello, World!');
+        $this->output->writeln(messages: 'RFC-Tool');
+        $this->output->writeln(messages: '-> initialize');
 
         $this->checkUsers();
 
@@ -34,10 +35,11 @@ class Command extends
         ;
 
         if (0 !== $usersCount) {
-            $this->output->writeln(messages: 'There are ' . $usersCount . ' users');
+            $this->output->writeln(messages: 'There are ' . $usersCount . ' user(s), no need to create initial user.');
 
             return;
         }
+
         $this->output->writeln(messages: 'There are no users yet, creating first admin user.');
 
         $email    = 'rfc@rfc.tool';
@@ -46,7 +48,7 @@ class Command extends
         new \RfcTool\Service\User\Creator()
             ->do(
                 bag: new \RfcTool\Service\User\Creator\Bag()
-                         ->setPersist(persist: true)
+                         ->doPersist(persist: true)
                          ->setEmail(email: $email)
                          ->setName(name: $name)
                          ->setRole(role: \RfcTool\Definition\User\Role::admin)

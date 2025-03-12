@@ -4,6 +4,10 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 #tidyup
 {
+
+    foreach (\RfcTool\Entity\Proposal::getRepository()->findBy(criteria: ['title' => 'test proposal 1']) as $proposal) {
+        $proposal::getRepository()->delete($proposal);
+    }
     $user1 = \RfcTool\Entity\User::getRepository()
                                  ->findByEmail(email: 'user1@rfc.tool')
     ;
@@ -28,6 +32,11 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
               ->delete($user3)
         ;
     }
+
+    foreach (\RfcTool\Entity\Group::getRepository()->findBy(criteria: ['name' => 'playGroup']) as $group) {
+        $group::getRepository()->delete($group);
+    }
+
 
     \RfcTool\Util\DependencyContainer::getInstance()
                                      ->getEntityManager()
@@ -88,14 +97,51 @@ $group = new \RfcTool\Service\Group\Creator()
                                     ->setEndDate(new \DateTime('2020-12-31')),
                                 new \RfcTool\Service\Group\Creator\UserBag()
                                     ->setUser($user3)
-                                    ->setBeginDate(new \DateTime('2021-01-01'))
+                                    ->setBeginDate(new \DateTime('2021-01-01')),
                             ])
 
         ,
     )
 ;
 
+$proposal1 = new \RfcTool\Service\Proposal\Creator()
+    ->do(
+        bag: new \RfcTool\Service\Proposal\Creator\Bag()
+                 ->doPersist(persist: true)
+                 ->setStatus(status: \RfcTool\Definition\Proposal\Status::PREPARE)
+                 ->setDescription(description: 'test proposal 1')
+                 ->setTitle(title: 'test proposal 1')
+                 ->setCalculationBase(calculationBase: \RfcTool\Definition\Proposal\CalculationBase::SIMPLE_MAJORITY)
+                 ->setGroup(group: $group)
+                 ->setVoteStart(voteStart: new \DateTime('2020-01-01'))
+                 ->setVoteEnd(voteEnd: new \DateTime('2020-01-15'))
+    )
+;
+$vote = new \RfcTool\Service\Proposal\Vote()
+    ->set(
+        bag: new \RfcTool\Service\Proposal\Vote\Bag()
+        ->setProposal(proposal: $proposal1)
+        ->setUser($user1)
+        ->setVoice(true)
+        ->setReason('test reason')
+        ->setVoteDate(voteDate: new \DateTime('2020-01-10'))
+    );
 
-$proposal1 = new \RfcTool\Entity\Proposal();
-$proposal2 = new \RfcTool\Entity\Proposal();
-$proposal3 = new \RfcTool\Entity\Proposal();
+$vote = new \RfcTool\Service\Proposal\Vote()
+    ->set(
+        bag: new \RfcTool\Service\Proposal\Vote\Bag()
+        ->setProposal(proposal: $proposal1)
+        ->setUser($user2)
+        ->setVoice(false)
+        ->setReason('test reason 2')
+        ->setVoteDate(voteDate: new \DateTime('2020-01-10'))
+    );
+$vote = new \RfcTool\Service\Proposal\Vote()
+    ->set(
+        bag: new \RfcTool\Service\Proposal\Vote\Bag()
+        ->setProposal(proposal: $proposal1)
+        ->setUser($user2)
+        ->setVoice(null)
+        ->setReason('test reason 2')
+        ->setVoteDate(voteDate: new \DateTime('2020-01-10'))
+    );

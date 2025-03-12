@@ -10,6 +10,38 @@ class Repository extends
     use \RfcTool\Entity\Share\Timestampable;
     use \RfcTool\Entity\Share\Blameable;
 
+    /**
+     * @return \RfcTool\Entity\UserInGroup[]
+     */
+    public function getForUser(\RfcTool\Entity\User $user): array
+    {
+        return $this
+            ->createQueryBuilder('user_in_group')
+            ->andWhere('user_in_group.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('user_in_group.user', 'ASC')
+            ->addOrderBy('user_in_group.beginDate', 'DESC')
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
+    /**
+     * @return \RfcTool\Entity\UserInGroup[]
+     */
+    public function getForGroup(\RfcTool\Entity\Group $group): array
+    {
+        return $this
+            ->createQueryBuilder('user_in_group')
+            ->andWhere('user_in_group.group = :group')
+            ->setParameter('group', $group)
+            ->orderBy('user_in_group.user', 'ASC')
+            ->addOrderBy('user_in_group.beginDate', 'DESC')
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
     public function isMember(\RfcTool\Entity\User $user, \RfcTool\Entity\Group $group, ?\DateTime $now): bool
     {
         $now = $now ?? \Carbon\Carbon::now();
@@ -18,8 +50,8 @@ class Repository extends
                 ->createQueryBuilder('user_in_group')
                 ->andWhere('user_in_group.user = :user')
                 ->andWhere('user_in_group.group = :group')
-                ->andWhere('user_in_group.end IS NULL OR user_in_group.end > :now')
-                ->andWhere('user_in_group.begin <= :now')
+                ->andWhere('user_in_group.endDate IS NULL OR user_in_group.endDate > :now')
+                ->andWhere('user_in_group.beginDate <= :now')
                 ->setParameter('user', $user)
                 ->setParameter('group', $group)
                 ->setParameter('now', $now)

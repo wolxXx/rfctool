@@ -21,7 +21,7 @@ class Vote
         if (false === $isMember) {
             throw new \RfcTool\Exception\VoteNotAllowedDueGroupMembership();
         }
-        if (null !== $proposal->getVoteStart() || $proposal->getVoteEnd()) {
+        if (null === $proposal->getVoteStart() || null === $proposal->getVoteEnd()) {
             throw new \RfcTool\Exception\VoteNotAllowedDueTimeSlot();
         }
         if ($proposal->getVoteStart() > $now || $proposal->getVoteEnd() < $now) {
