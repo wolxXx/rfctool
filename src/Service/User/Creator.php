@@ -27,6 +27,17 @@ class Creator
             ;
         }
 
+        foreach ($bag->getGroups() as $group) {
+            $newGroup = new \RfcTool\Entity\UserInGroup()
+                ->setUser(user: $newUser)
+                ->setGroup(group: $group->getGroup())
+                ->setBeginDate(beginDate: $group->getBeginDate())
+                ->setEndDate(endDate: $group->getEndDate())
+                ;
+            $newGroup::getRepository()
+                ->create($newGroup);
+        }
+
         if (true === $bag->shallPersist()) {
             \RfcTool\Util\DependencyContainer::getInstance()
                                              ->getEntityManager()

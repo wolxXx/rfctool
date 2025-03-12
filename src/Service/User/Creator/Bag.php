@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace RfcTool\Service\User\Creator;
 
@@ -16,11 +16,20 @@ final class Bag
 
     private \RfcTool\Definition\User\Status $status  = \RfcTool\Definition\User\Status::invited;
 
+    /**
+     * @var \RfcTool\Service\User\Creator\CredentialBag[]
+     */
     private array                           $credentials;
+
+    /**
+     * @var \RfcTool\Service\User\Creator\GroupBag[]
+     */
+    private array                           $groups;
 
     public function __construct()
     {
         $this->credentials = [];
+        $this->groups      = [];
     }
 
     public function shallPersist(): bool
@@ -83,26 +92,17 @@ final class Bag
         return $this;
     }
 
-    public function isPersist(): bool
-    {
-        return $this->persist;
-    }
-
-    public function setPersist(bool $persist): Bag
-    {
-        $this->persist = $persist;
-
-        return $this;
-    }
-
     /**
-     * @return CredentialBag[]
+     * @return \RfcTool\Service\User\Creator\CredentialBag[]
      */
     public function getCredentials(): array
     {
         return $this->credentials;
     }
 
+    /**
+     * @param \RfcTool\Service\User\Creator\CredentialBag[] $credentials
+     */
     public function setCredentials(array $credentials): Bag
     {
         $this->credentials = [];
@@ -116,6 +116,34 @@ final class Bag
     public function addCredential(CredentialBag $bag): Bag
     {
         $this->credentials[] = $bag;
+
+        return $this;
+    }
+
+    /**
+     * @return \RfcTool\Service\User\Creator\GroupBag[]
+     */
+    public function getGroups(): array
+    {
+        return $this->groups;
+    }
+
+    /**
+     * @param \RfcTool\Service\User\Creator\GroupBag[] $groups
+     */
+    public function setGroups(array $groups): Bag
+    {
+        $this->groups = [];
+        foreach ($groups as $group) {
+            $this->addGroup($group);
+        }
+
+        return $this;
+    }
+
+    public function addGroup(GroupBag $bag): Bag
+    {
+        $this->groups[] = $bag;
 
         return $this;
     }
