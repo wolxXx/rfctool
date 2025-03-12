@@ -26,7 +26,15 @@ class Proposal
         type  : \Doctrine\DBAL\Types\Types::STRING,
         length: 255
     )]
-    protected string                                       $title;
+    protected string $title;
+
+
+    #[\Doctrine\ORM\Mapping\Column(
+        type    : \Doctrine\DBAL\Types\Types::STRING,
+        length  : 10000,
+        nullable: true
+    )]
+    protected ?string                                      $description = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'status',
@@ -47,24 +55,24 @@ class Proposal
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime                                   $voteStart = null;
+    protected ?\DateTime                                   $voteStart   = null;
 
     #[\Doctrine\ORM\Mapping\Column(
         name    : 'vote_end',
         type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime                                   $voteEnd   = null;
+    protected ?\DateTime                                   $voteEnd     = null;
 
     #[\Doctrine\ORM\Mapping\ManyToOne(
         targetEntity: \RfcTool\Entity\Group::class,
     )]
     #[\Doctrine\ORM\Mapping\JoinColumn(
         name    : 'group_id',
-        nullable: false,
+        nullable: true,
         onDelete: 'CASCADE',
     )]
-    protected \RfcTool\Entity\Group                        $group;
+    protected ?\RfcTool\Entity\Group                       $group       = null;
 
     public function __construct() {}
 
@@ -123,12 +131,12 @@ class Proposal
         return $this;
     }
 
-    public function getGroup(): Group
+    public function getGroup(): ?Group
     {
         return $this->group;
     }
 
-    public function setGroup(Group $group): Proposal
+    public function setGroup(?Group $group): Proposal
     {
         $this->group = $group;
 
@@ -143,6 +151,18 @@ class Proposal
     public function setStatus(\RfcTool\Definition\Proposal\Status $status): Proposal
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): Proposal
+    {
+        $this->description = $description;
 
         return $this;
     }

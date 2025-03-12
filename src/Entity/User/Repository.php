@@ -9,6 +9,11 @@ class Repository extends \Doctrine\ORM\EntityRepository
     use \RfcTool\Entity\Share\Timestampable;
     use \RfcTool\Entity\Share\Blameable;
 
+    public function findByEmail(string $email): ?\RfcTool\Entity\User
+    {
+        return $this->findOneBy(criteria: ['email' => $email]);
+    }
+
     public function create(\RfcTool\Entity\User $entity): static
     {
         $this

@@ -53,19 +53,6 @@ class User
     )]
     protected ?\DateTime                      $lastLogin = null;
 
-    /**
-     * Many Users have Many Groups.
-     *
-     * @var \Doctrine\Common\Collections\Collection<int, User>
-     */
-    #[\Doctrine\ORM\Mapping\ManyToMany(targetEntity: Group::class, mappedBy: 'users')]
-    private \Doctrine\Common\Collections\Collection $groups;
-
-    public function __construct()
-    {
-        $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
     public static function getRepository(): User\Repository
     {
         return static::getRepositoryByClassName();

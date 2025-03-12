@@ -31,20 +31,6 @@ class Group
     )]
     protected ?string $description = null;
 
-    /**
-     * Many Users have Many Groups.
-     *
-     * @var \Doctrine\Common\Collections\Collection<int, Group>
-     */
-    #[\Doctrine\ORM\Mapping\ManyToMany(targetEntity: User::class, inversedBy: 'groups')]
-    #[\Doctrine\ORM\Mapping\JoinTable(name: 'users_groups')]
-    private \Doctrine\Common\Collections\Collection $users;
-
-    public function __construct()
-    {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
     public static function getRepository(): Group\Repository
     {
         return static::getRepositoryByClassName();
@@ -72,13 +58,5 @@ class Group
         $this->description = $description;
 
         return $this;
-    }
-
-    /**
-     * @return User[]
-     */
-    public function getUsers(): array
-    {
-        return $this->users;
     }
 }
