@@ -32,10 +32,7 @@ class Vote
                                                      ->findForUserAndProposal(user: $user, proposal: $proposal)
         ;
         if (true === $existingVote instanceof \RfcTool\Entity\Proposal\Vote) {
-            $existingVote
-                ->setVoice($bag->getVoice())
-                ->setReason($bag->getReason())
-            ;
+            $this->setData($existingVote, $bag);
             $existingVote::getRepository()
                          ->update(entity: $existingVote)
             ;
@@ -52,9 +49,8 @@ class Vote
         $newVote = new \RfcTool\Entity\Proposal\Vote()
             ->setProposal(proposal: $proposal)
             ->setUser(user: $user)
-            ->setVoice($bag->getVoice())
-            ->setReason($bag->getReason())
         ;
+        $this->setData($newVote, $bag);
         $newVote::getRepository()
                 ->create($newVote)
         ;
@@ -67,5 +63,13 @@ class Vote
 
 
         return $newVote;
+    }
+
+    protected function setData(\RfcTool\Entity\Proposal\Vote $vote, \RfcTool\Service\Proposal\Vote\Bag $bag): void
+    {
+        $vote
+            ->setVoice($bag->getVoice())
+            ->setReason($bag->getReason())
+        ;
     }
 }
