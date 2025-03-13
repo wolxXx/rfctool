@@ -1,25 +1,25 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace RfcTool\Definition\User;
 
 
 enum Role: string
 {
-    case guest   = 'guest';
+    case guest = 'guest';
 
-    case user    = 'user';
+    case user = 'user';
 
     case manager = 'manager';
 
-    case admin   = 'admin';
+    case admin = 'admin';
 
     public const array ALL = [
         self::guest->value,
         self::user->value,
         self::manager->value,
-        self::manager->value,
+        self::admin->value,
     ];
 
     public static function getRoles(): array
@@ -28,7 +28,7 @@ enum Role: string
             self::guest->value,
             self::user->value,
             self::manager->value,
-            self::manager->value,
+            self::admin->value,
         ];
     }
 }
