@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RfcToolTest\Service\User\Creator;
 
 class BagTest extends \PHPUnit\Framework\TestCase
