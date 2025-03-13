@@ -23,7 +23,7 @@ class Creator
                 ->setName(name: $credential->getType()->value)
             ;
             $newCredential::getRepository()
-                          ->create($newCredential)
+                          ->create(entity: $newCredential)
             ;
         }
 
@@ -44,6 +44,10 @@ class Creator
                                              ->flush()
             ;
         }
+        \RfcTool\Util\DependencyContainer::getInstance()
+            ->getEntityManager()
+            ->refresh(object: $newUser)
+        ;
 
         return $newUser;
     }
