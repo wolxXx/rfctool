@@ -8,7 +8,7 @@ namespace RfcTool\Entity;
     repositoryClass: Group\Repository::class
 )]
 #[\Doctrine\ORM\Mapping\Table(
-    name   : self::TABLE_NAME,
+    name: self::TABLE_NAME,
     options: \RfcTool\Entity\Share\BaseTable::DEFAULT_OPTIONS,
 )]
 class Group
@@ -19,17 +19,28 @@ class Group
     public const string TABLE_NAME = 'group';
 
     #[\Doctrine\ORM\Mapping\Column(
-        type  : \Doctrine\DBAL\Types\Types::STRING,
+        type: \Doctrine\DBAL\Types\Types::STRING,
         length: 255
     )]
-    protected string  $name;
+    protected string $name;
 
     #[\Doctrine\ORM\Mapping\Column(
-        type    : \Doctrine\DBAL\Types\Types::TEXT,
-        length  : 255,
+        type: \Doctrine\DBAL\Types\Types::TEXT,
+        length: 255,
         nullable: true
     )]
     protected ?string $description = null;
+
+    #[\Doctrine\ORM\Mapping\OneToMany(
+        targetEntity: \RfcTool\Entity\Proposal\Vote::class,
+        mappedBy: 'proposal'
+    )]
+    protected \Doctrine\Common\Collections\Collection $votes;
+
+    public function __construct()
+    {
+        $this->votes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public static function getRepository(): Group\Repository
     {
@@ -58,5 +69,16 @@ class Group
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * @return \RfcTool\Entity\Proposal\Vote[]
+     */
+    public function getVotes():array
+    {
+        return $this
+            ->votes
+            ->toArray()
+            ;
     }
 }
