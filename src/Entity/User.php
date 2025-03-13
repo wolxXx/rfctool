@@ -53,6 +53,17 @@ class User
     )]
     protected ?\DateTime                      $lastLogin = null;
 
+    #[\Doctrine\ORM\Mapping\OneToMany(
+        targetEntity: \RfcTool\Entity\User\Credential::class,
+        mappedBy: 'user'
+    )]
+    protected \Doctrine\Common\Collections\Collection $credentials;
+
+    public function __construct()
+    {
+        $this->credentials = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public static function getRepository(): User\Repository
     {
         return static::getRepositoryByClassName();
@@ -116,5 +127,16 @@ class User
         $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * @return \RfcTool\Entity\User\Credential[]
+     */
+    public function getCredentials():array
+    {
+        return $this
+            ->credentials
+            ->toArray()
+            ;
     }
 }
