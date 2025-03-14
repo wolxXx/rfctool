@@ -53,25 +53,31 @@ class User
     )]
     protected ?\DateTime                      $lastLogin = null;
 
-
     #[\Doctrine\ORM\Mapping\Column(
-        name: 'invitation_code',
-        type: \Doctrine\DBAL\Types\Types::STRING,
-        length: 255,
+        name    : 'invitation_code',
+        type    : \Doctrine\DBAL\Types\Types::STRING,
+        length  : 255,
         nullable: true
     )]
-    protected string $invitationCode;
+    protected ?string                                 $invitationCode           = null;
 
     #[\Doctrine\ORM\Mapping\Column(
-        name: 'invitation_code_valid_until',
-        type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
+        name    : 'invitation_code_valid_until',
+        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
         nullable: true
     )]
-    protected ?\DateTime $invitationCodeValidUntil = null;
+    protected ?\DateTime                              $invitationCodeValidUntil = null;
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name    : 'invitation_code_used',
+        type    : \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
+        nullable: true
+    )]
+    protected ?\DateTime                              $invitationCodeUsed       = null;
 
     #[\Doctrine\ORM\Mapping\OneToMany(
         targetEntity: \RfcTool\Entity\User\Credential::class,
-        mappedBy: 'user'
+        mappedBy    : 'user'
     )]
     protected \Doctrine\Common\Collections\Collection $credentials;
 
@@ -85,7 +91,6 @@ class User
         return static::getRepositoryByClassName();
     }
 
-
     /**
      * @return \RfcTool\Entity\User\Credential[]
      */
@@ -93,7 +98,8 @@ class User
     {
         return $this
             ->credentials
-            ->toArray();
+            ->toArray()
+        ;
     }
 
     public function getName(): string
@@ -156,12 +162,12 @@ class User
         return $this;
     }
 
-    public function getInvitationCode(): string
+    public function getInvitationCode(): ?string
     {
         return $this->invitationCode;
     }
 
-    public function setInvitationCode(string $invitationCode): static
+    public function setInvitationCode(?string $invitationCode): static
     {
         $this->invitationCode = $invitationCode;
 
@@ -176,6 +182,18 @@ class User
     public function setInvitationCodeValidUntil(?\DateTime $invitationCodeValidUntil): static
     {
         $this->invitationCodeValidUntil = $invitationCodeValidUntil;
+
+        return $this;
+    }
+
+    public function getInvitationCodeUsed(): ?\DateTime
+    {
+        return $this->invitationCodeUsed;
+    }
+
+    public function setInvitationCodeUsed(?\DateTime $invitationCodeUsed): static
+    {
+        $this->invitationCodeUsed = $invitationCodeUsed;
 
         return $this;
     }
