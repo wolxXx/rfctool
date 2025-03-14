@@ -53,6 +53,22 @@ class User
     )]
     protected ?\DateTime                      $lastLogin = null;
 
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name: 'invitation_code',
+        type: \Doctrine\DBAL\Types\Types::STRING,
+        length: 255,
+        nullable: true
+    )]
+    protected string $invitationCode;
+
+    #[\Doctrine\ORM\Mapping\Column(
+        name: 'invitation_code_valid_until',
+        type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE,
+        nullable: true
+    )]
+    protected ?\DateTime $invitationCodeValidUntil = null;
+
     #[\Doctrine\ORM\Mapping\OneToMany(
         targetEntity: \RfcTool\Entity\User\Credential::class,
         mappedBy: 'user'
@@ -67,6 +83,17 @@ class User
     public static function getRepository(): User\Repository
     {
         return static::getRepositoryByClassName();
+    }
+
+
+    /**
+     * @return \RfcTool\Entity\User\Credential[]
+     */
+    public function getCredentials(): array
+    {
+        return $this
+            ->credentials
+            ->toArray();
     }
 
     public function getName(): string
@@ -129,14 +156,27 @@ class User
         return $this;
     }
 
-    /**
-     * @return \RfcTool\Entity\User\Credential[]
-     */
-    public function getCredentials():array
+    public function getInvitationCode(): string
     {
-        return $this
-            ->credentials
-            ->toArray()
-            ;
+        return $this->invitationCode;
+    }
+
+    public function setInvitationCode(string $invitationCode): static
+    {
+        $this->invitationCode = $invitationCode;
+
+        return $this;
+    }
+
+    public function getInvitationCodeValidUntil(): ?\DateTime
+    {
+        return $this->invitationCodeValidUntil;
+    }
+
+    public function setInvitationCodeValidUntil(?\DateTime $invitationCodeValidUntil): static
+    {
+        $this->invitationCodeValidUntil = $invitationCodeValidUntil;
+
+        return $this;
     }
 }
