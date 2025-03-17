@@ -32,11 +32,12 @@ class Repository extends
     public function getForGroup(\RfcTool\Entity\Group $group): array
     {
         return $this
-            ->createQueryBuilder('user_in_group')
+            ->createQueryBuilder(alias: 'user_in_group')
+            ->setCacheable(cacheable: false)
             ->andWhere('user_in_group.group = :group')
-            ->setParameter('group', $group)
-            ->orderBy('user_in_group.user', 'ASC')
-            ->addOrderBy('user_in_group.beginDate', 'DESC')
+            ->setParameter(key: 'group', value: $group)
+            ->orderBy(sort: 'user_in_group.user', order: 'ASC')
+            ->addOrderBy(sort: 'user_in_group.beginDate', order: 'DESC')
             ->getQuery()
             ->execute()
         ;
