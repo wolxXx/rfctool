@@ -108,7 +108,7 @@ class SessionSaveHandler implements
             ;
 
             return true;
-        } catch (\Exception $exception) {
+        } catch (\Throwable $exception) {
             DependencyContainer::getInstance()
                                ->getLogger()
                                ->emergency(message: 'cannot save session: ' . $exception->getMessage() . ' ' . $exception->getTraceAsString())
