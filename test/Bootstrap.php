@@ -16,6 +16,7 @@ ini_set(option: 'xdebug.var_display_max_children', value: '1000000');
 ini_set(option: 'xdebug.var_display_max_depth', value: '1000000');
 ini_set(option: 'zend.exception_ignore_args', value: '1');
 \RfcTool\Util\QueryLogger::$disabled = true;
+\RfcTool\Util\SessionSaveHandler::$SHALL_RUN = false;
 
 class Bootstrap
 {
