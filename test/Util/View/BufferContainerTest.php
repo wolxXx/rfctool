@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace DoEveryAppTest\Util\View;
+namespace RfcToolTest\Util\View;
 
-class BufferContainerTest extends \DoEveryAppTest\TestBase
+class BufferContainerTest extends \RfcToolTest\TestBase
 {
     public function testEmpty(): void
     {
-        $container = new \DoEveryApp\Util\View\BufferContainer();
+        $container = new \RfcTool\Util\View\BufferContainer();
         $this->assertSame(expected: '', actual: $container->get());
     }
 
     public function testSimple(): void
     {
-        $container = new \DoEveryApp\Util\View\BufferContainer();
+        $container = new \RfcTool\Util\View\BufferContainer();
         $counter = $container->next();
         $container->set(registration: 'registration' . $counter, content: 'asdf');
         $counter = $container->next();
@@ -22,10 +22,11 @@ class BufferContainerTest extends \DoEveryAppTest\TestBase
         $this->assertSame(expected: 'asdf foobar', actual: $container->get());
     }
 
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
     public function testWithAsyncCall(): void
 
     {
-        $container = new \DoEveryApp\Util\View\BufferContainer();
+        $container = new \RfcTool\Util\View\BufferContainer();
         \Amp\async(function ($id) use ($container) {
             ob_start();
             usleep(microseconds: rand(1000, 2000));

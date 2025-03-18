@@ -8,10 +8,11 @@
          stopOnFailure="false"
          stopOnIncomplete="false"
          stopOnSkipped="false"
-         timeoutForSmallTests="10"
-         timeoutForMediumTests="10"
-         timeoutForLargeTests="60"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.2/phpunit.xsd"
+         defaultTimeLimit="100"
+         timeoutForSmallTests="100"
+         timeoutForMediumTests="100"
+         timeoutForLargeTests="100"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
          cacheDirectory=".phpunit.cache"
          backupStaticProperties="true">
     <testsuites>

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DoEveryAppTest\Util;
+namespace RfcToolTest\Util;
 
 
-class TranslatorTest extends \DoEveryAppTest\TestBase
+class TranslatorTest extends \RfcToolTest\TestBase
 {
 
-    protected function executeTranslation(\DoEveryApp\Util\Translator $translator, string $method, array $parameters = [])
+    protected function executeTranslation(\RfcTool\Util\Translator $translator, string $method, array $parameters = [])
     {
         if (0 === count($parameters)) {
             $translator->$method();
@@ -49,21 +49,21 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
     #[\PHPUnit\Framework\Attributes\DataProvider('translationsTestDataProvider')]
     public function testNothingTranslations($method, $parameters)
     {
-        $this->executeTranslation(new \DoEveryApp\Util\Translator\Nothing(), $method, $parameters);
+        $this->executeTranslation(new \RfcTool\Util\Translator\Debug(), $method, $parameters);
         $this->assertTrue(condition: true);
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('translationsTestDataProvider')]
     public function testGermanTranslations($method, $parameters)
     {
-        $this->executeTranslation(new \DoEveryApp\Util\Translator\German(), $method, $parameters);
+        $this->executeTranslation(new \RfcTool\Util\Translator\German(), $method, $parameters);
         $this->assertTrue(condition: true);
     }
 
     #[\PHPUnit\Framework\Attributes\DataProvider('translationsTestDataProvider')]
     public function testEnglishTranslations($method, $parameters)
     {
-        $this->executeTranslation(new \DoEveryApp\Util\Translator\English(), $method, $parameters);
+        $this->executeTranslation(new \RfcTool\Util\Translator\English(), $method, $parameters);
         $this->assertTrue(condition: true);
     }
 
@@ -76,7 +76,7 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
     public static function translationsTestDataProvider(): array
     {
         $methods = [];
-        $reflection = new \ReflectionClass(objectOrClass: \DoEveryApp\Util\Translator::class);
+        $reflection = new \ReflectionClass(objectOrClass: \RfcTool\Util\Translator::class);
         $reflectionMethods = $reflection->getMethods(filter: \ReflectionMethod::IS_PUBLIC);
         foreach ($reflectionMethods as $method) {
             $parameters = [];
@@ -148,27 +148,27 @@ class TranslatorTest extends \DoEveryAppTest\TestBase
 
     public function testGermanInstantiation(): void
     {
-        $translator = new \DoEveryApp\Util\Translator\German();
-        $this->assertInstanceOf(expected: \DoEveryApp\Util\Translator::class, actual: $translator);
-        $this->assertInstanceOf(expected: \DoEveryApp\Util\Translator\German::class, actual: $translator);
+        $translator = new \RfcTool\Util\Translator\German();
+        $this->assertInstanceOf(expected: \RfcTool\Util\Translator::class, actual: $translator);
+        $this->assertInstanceOf(expected: \RfcTool\Util\Translator\German::class, actual: $translator);
         $this->assertSame(expected: 'Dashboard', actual: ($translator)->dashboard());
     }
 
 
     public function testEnglishInstantiation(): void
     {
-        $translator = new \DoEveryApp\Util\Translator\English();
-        $this->assertInstanceOf(expected: \DoEveryApp\Util\Translator::class, actual: $translator);
-        $this->assertInstanceOf(expected: \DoEveryApp\Util\Translator\English::class, actual: $translator);
+        $translator = new \RfcTool\Util\Translator\English();
+        $this->assertInstanceOf(expected: \RfcTool\Util\Translator::class, actual: $translator);
+        $this->assertInstanceOf(expected: \RfcTool\Util\Translator\English::class, actual: $translator);
         $this->assertSame(expected: 'dashboard', actual: ($translator)->dashboard());
     }
 
 
-    public function testNothingInstantiation(): void
+    public function testDebugInstantiation(): void
     {
-        $translator = new \DoEveryApp\Util\Translator\Nothing();
-        $this->assertInstanceOf(expected: \DoEveryApp\Util\Translator::class, actual: $translator);
-        $this->assertInstanceOf(expected: \DoEveryApp\Util\Translator\Nothing::class, actual: $translator);
+        $translator = new \RfcTool\Util\Translator\Debug();
+        $this->assertInstanceOf(expected: \RfcTool\Util\Translator::class, actual: $translator);
+        $this->assertInstanceOf(expected: \RfcTool\Util\Translator\Debug::class, actual: $translator);
         $this->assertSame(expected: 'dashboard()', actual: ($translator)->dashboard());
     }
 }

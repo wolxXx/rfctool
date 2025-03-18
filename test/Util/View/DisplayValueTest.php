@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DoEveryAppTest\Util\View;
+namespace RfcToolTest\Util\View;
 
-class DisplayValueTest extends \DoEveryAppTest\TestBase
+class DisplayValueTest extends \RfcToolTest\TestBase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('getTestDataProvider')]
     public function testGet(string $expected, mixed $value): void
     {
-        $this->assertSame(expected: $expected, actual: \DoEveryApp\Util\View\DisplayValue::do(value: $value));
+        $this->assertSame(expected: $expected, actual: \RfcTool\Util\View\DisplayValue::do(value: $value));
     }
 
 

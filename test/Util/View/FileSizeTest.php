@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace DoEveryAppTest\Util\View;
+namespace RfcToolTest\Util\View;
 
-class FileSizeTest extends \PHPUnit\Framework\TestCase
+class FileSizeTest extends \RfcToolTest\TestBase
 {
     #[\PHPUnit\Framework\Attributes\DataProvider('getTestDataProvider')]
     public function testGet($expected, int $size, ?int $decimals)
     {
-        $this->assertSame(expected: $expected, actual: \DoEveryApp\Util\View\FileSize::humanReadable(size: $size));
+        $this->assertSame(expected: $expected, actual: \RfcTool\Util\View\FileSize::humanReadable(size: $size));
     }
 
 
