@@ -13,8 +13,10 @@ namespace RfcTool\Entity\User;
 )]
 class Credential
 {
+    use \RfcTool\Entity\Share\Blame;
     use \RfcTool\Entity\Share\Id;
     use \RfcTool\Entity\Share\Repository;
+    use \RfcTool\Entity\Share\Timestamp;
 
     public const string TABLE_NAME = 'user_credential';
 
