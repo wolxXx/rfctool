@@ -35,7 +35,7 @@ class CreatorTest extends \PHPUnit\Framework\TestCase
                 bag: new \RfcTool\Service\User\Creator\Bag()
                     ->doPersist(true)
                     ->setName('user1')
-                    ->setEmail(\Faker\Factory::create()->email)
+                    ->setEmail(\Faker\Factory::create()->email())
                     ->setRole(\RfcTool\Definition\User\Role::user)
             )
             ;

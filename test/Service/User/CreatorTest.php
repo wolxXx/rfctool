@@ -16,7 +16,7 @@ class CreatorTest extends \PHPUnit\Framework\TestCase
         $creator = new \RfcTool\Service\User\Creator();
         $name = 'test';
         $role = \RfcTool\Definition\User\Role::user;
-        $email = \Faker\Factory::create()->email;
+        $email = \Faker\Factory::create()->email();
         $password = '<PASSWORD>';
 
         $group = new \RfcTool\Service\Group\Creator()
