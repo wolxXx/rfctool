@@ -50,7 +50,7 @@ class Result
         $this->countVotes();
 
         if (0 === $this->voteCount) {
-            $this->result = \RfcTool\Definition\Proposal\Result::OPEN;
+            $this->result = \RfcTool\Definition\Proposal\Result::REJECTED;
 
             return $this;
         }
