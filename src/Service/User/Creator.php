@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace RfcTool\Service\User;
 
 class Creator
@@ -11,6 +13,8 @@ class Creator
             ->setName(name: $bag->getName())
             ->setEmail(email: $bag->getEmail())
             ->setRole(role: $bag->getRole())
+            ->setInvitationCode(invitationCode: $bag->getInvitationCode())
+            ->setInvitationCodeValidUntil(invitationCodeValidUntil: $bag->getInvitationCodeValidUntil())
         ;
         $newUser::getRepository()
                 ->create(entity: $newUser)

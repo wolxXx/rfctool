@@ -1,30 +1,34 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace RfcTool\Service\User\Creator;
 
 final class Bag
 {
-    private bool                            $persist = true;
+    private bool                            $persist                  = true;
 
     private string                          $name;
 
     private string                          $email;
 
+    private ?string                         $invitationCode           = null;
+
+    private ?\DateTime                      $invitationCodeValidUntil = null;
+
     private \RfcTool\Definition\User\Role   $role;
 
-    private \RfcTool\Definition\User\Status $status  = \RfcTool\Definition\User\Status::invited;
+    private \RfcTool\Definition\User\Status $status                   = \RfcTool\Definition\User\Status::invited;
 
     /**
      * @var \RfcTool\Service\User\Creator\CredentialBag[]
      */
-    private array                           $credentials;
+    private array $credentials;
 
     /**
      * @var \RfcTool\Service\User\Creator\GroupBag[]
      */
-    private array                           $groups;
+    private array $groups;
 
     public function __construct()
     {
@@ -88,6 +92,30 @@ final class Bag
     public function setStatus(\RfcTool\Definition\User\Status $status): Bag
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getInvitationCodeValidUntil(): ?\DateTime
+    {
+        return $this->invitationCodeValidUntil;
+    }
+
+    public function setInvitationCodeValidUntil(?\DateTime $invitationCodeValidUntil): Bag
+    {
+        $this->invitationCodeValidUntil = $invitationCodeValidUntil;
+
+        return $this;
+    }
+
+    public function getInvitationCode(): ?string
+    {
+        return $this->invitationCode;
+    }
+
+    public function setInvitationCode(?string $invitationCode): Bag
+    {
+        $this->invitationCode = $invitationCode;
 
         return $this;
     }

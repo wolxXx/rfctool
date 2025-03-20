@@ -25,4 +25,14 @@ class English implements
         }
         throw new \InvalidArgumentException(message: 'Unknown translation: ' . $what);
     }
+
+    public function no(): string
+    {
+        return 'no';
+    }
+
+    public function yes(): string
+    {
+        return 'yes';
+    }
 }

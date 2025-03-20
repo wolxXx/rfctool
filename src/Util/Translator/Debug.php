@@ -1,9 +1,8 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace RfcTool\Util\Translator;
-
 
 class Debug implements
     \RfcTool\Util\Translator
@@ -14,6 +13,16 @@ class Debug implements
     }
 
     public function translate($what, ...$args): string
+    {
+        return $this->debug();
+    }
+
+    public function no(): string
+    {
+        return $this->debug();
+    }
+
+    public function yes(): string
     {
         return $this->debug();
     }

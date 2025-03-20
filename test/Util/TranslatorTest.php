@@ -151,7 +151,7 @@ class TranslatorTest extends \RfcToolTest\TestBase
         $translator = new \RfcTool\Util\Translator\German();
         $this->assertInstanceOf(expected: \RfcTool\Util\Translator::class, actual: $translator);
         $this->assertInstanceOf(expected: \RfcTool\Util\Translator\German::class, actual: $translator);
-        $this->assertSame(expected: 'Dashboard', actual: ($translator)->dashboard());
+        $this->assertSame(expected: 'ja', actual: ($translator)->yes());
     }
 
 
@@ -160,7 +160,7 @@ class TranslatorTest extends \RfcToolTest\TestBase
         $translator = new \RfcTool\Util\Translator\English();
         $this->assertInstanceOf(expected: \RfcTool\Util\Translator::class, actual: $translator);
         $this->assertInstanceOf(expected: \RfcTool\Util\Translator\English::class, actual: $translator);
-        $this->assertSame(expected: 'dashboard', actual: ($translator)->dashboard());
+        $this->assertSame(expected: 'yes', actual: ($translator)->yes());
     }
 
 
@@ -169,6 +169,6 @@ class TranslatorTest extends \RfcToolTest\TestBase
         $translator = new \RfcTool\Util\Translator\Debug();
         $this->assertInstanceOf(expected: \RfcTool\Util\Translator::class, actual: $translator);
         $this->assertInstanceOf(expected: \RfcTool\Util\Translator\Debug::class, actual: $translator);
-        $this->assertSame(expected: 'dashboard()', actual: ($translator)->dashboard());
+        $this->assertSame(expected: 'yes()', actual: ($translator)->yes());
     }
 }

@@ -25,4 +25,14 @@ class German implements
         }
         throw new \InvalidArgumentException(message: 'Unknown translation: ' . $what);
     }
+
+    public function no(): string
+    {
+        return 'nein';
+    }
+
+    public function yes(): string
+    {
+        return 'ja';
+    }
 }
