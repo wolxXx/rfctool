@@ -43,15 +43,16 @@ class Command extends
                                         'Status',
                                         'Name',
                                         'Email',
+                                        'invitation code',
+                                        'last seen',
                                         'Role',
-                                        'Created At',
-                                        'Created By',
-                                        'Updated At',
-                                        'Updated By',
+                                        'Blames',
                                         'Groups',
                                     ]);
         $users = \RfcTool\Entity\User::getRepository()
                                      ->createQueryBuilder('user')
+                                     ->setCacheable(false)
+                                     ->setCacheMode(\Doctrine\ORM\Cache::MODE_REFRESH)
                                      ->getQuery()
                                      ->execute()
         ;
@@ -67,16 +68,22 @@ class Command extends
             if ('' === $groups) {
                 $groups = '-';
             }
+            $blame = 'C: '.$user->getcreatedAt()->format('Y-m-d H:i:s') . PHP_EOL .' by '.$user->getCreatedBy();
+            $blame .= PHP_EOL . 'U: '.$user->getupdatedAt()->format('Y-m-d H:i:s'). ' by ' . PHP_EOL .$user->getUpdatedBy();
+
+            $invitationCode = 'xxx'.$user->getInvitationCode().' '.(null !== $user->getInvitationCodeValidUntil()? $user->getInvitationCodeValidUntil()->format('Y-m-d H:i:s') : '-');
+            $invitationCode = 'xxx'.$user->getInvitationCode();
+            \RfcTool\Util\Debugger::debug($user->getInvitationCode(), $user->getId());
+
             $table->addRow(row: [
                                     $user->getId(),
                                     $user->getStatus()->value,
                                     $user->getName(),
                                     $user->getEmail(),
+                                    $invitationCode,
+                                    $user->getLastLogin()?->format('Y-m-d H:i:s') ?? '-',
                                     $user->getRole()->value,
-                                    $user->getCreatedAt()->format('Y-m-d H:i:s'),
-                                    $user->getCreatedBy(),
-                                    $user->getUpdatedAt()->format('Y-m-d H:i:s'),
-                                    $user->getUpdatedBy(),
+                                    $blame,
                                     $groups,
                                 ]);
         }
