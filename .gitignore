@@ -1,6 +1,7 @@
 /.env
 /app.log
 /doctrineConfiguration.php
+/stan.log
 /structure.dump
 /test/testdocs.html
 
