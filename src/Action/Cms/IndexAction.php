@@ -21,8 +21,6 @@ class IndexAction extends \RfcTool\Action\AbstractAction
             return $this->render(script: 'action/cms/index');
         }
 
-        return $this->render(script: 'action/cms/dashboard', data: [
-
-        ]);
+        return $this->render(script: 'action/cms/dashboard');
     }
 }
