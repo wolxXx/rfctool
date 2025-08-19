@@ -163,9 +163,6 @@ abstract class AbstractAction
         return $this->getResponse();
     }
 
-    /**
-     * @param array $data
-     */
     protected function render(string $script, array $data = []): \Psr\Http\Message\ResponseInterface
     {
         $defaultVariables = [
