@@ -4,9 +4,9 @@ declare(strict_types = 1);
 
 namespace RfcTool\Util\Translator;
 
-class English implements
-    \RfcTool\Util\Translator
+class English implements \RfcTool\Util\Translator
 {
+    #[\Override]
     public function translate($what, ...$args): string
     {
         switch ($what) {
@@ -26,11 +26,13 @@ class English implements
         throw new \InvalidArgumentException(message: 'Unknown translation: ' . $what);
     }
 
+    #[\Override]
     public function no(): string
     {
         return 'no';
     }
 
+    #[\Override]
     public function yes(): string
     {
         return 'yes';
