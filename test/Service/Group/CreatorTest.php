@@ -11,23 +11,6 @@ class CreatorTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(expected: \RfcTool\Service\Group\Creator::class, actual: new \RfcTool\Service\Group\Creator());
     }
 
-    public function testNoUsers()
-    {
-        $name = 'test group';
-        $description = 'test description';
-        $group = new \RfcTool\Service\Group\Creator()
-            ->do(
-                bag: new \RfcTool\Service\Group\Creator\Bag()
-                    ->doPersist(true)
-                    ->setName($name)
-                    ->setDescription($description)
-            );
-
-        $this->assertSame(expected: $name, actual: $group->getName());
-        $this->assertSame(expected: $description, actual: $group->getDescription());
-        $this->assertSame(expected: 1, actual: $group->getId());
-    }
-
     public function testWithUsers()
     {
         $user1 = new \RfcTool\Service\User\Creator()

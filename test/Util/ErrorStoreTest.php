@@ -28,7 +28,6 @@ class ErrorStoreTest extends \RfcToolTest\TestBase
         $this->assertSame(expected: ['value'], actual: $store->getErrors('key'));
     }
 
-    #[\PHPUnit\Framework\Attributes\After]
     public function testGetAllErrors()
     {
         $store = new \RfcTool\Util\ErrorStore();
