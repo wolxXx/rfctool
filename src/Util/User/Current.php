@@ -6,12 +6,6 @@ namespace RfcTool\Util\User;
 
 class Current
 {
-    public const string LANGUAGE_GERMAN  = 'de';
-
-    public const string LANGUAGE_ENGLISH = 'en';
-
-    public const string LANGUAGE_FRENCH  = 'fr';
-
     public static ?\RfcTool\Entity\User $forcedLoggedInUser = null;
 
     private static function getAuthSession(): \RfcTool\Util\Session
