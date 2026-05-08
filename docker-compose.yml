@@ -4,12 +4,11 @@ volumes:
 
 services:
   mysql:
-    image: mariadb:11.3
+    image: mariadb:11
     platform: linux/amd64
     security_opt:
       - "seccomp=unconfined"
     restart: always
-    container_name: "rfctool-db"
     ports:
       - "127.0.0.1:${DB_PORT}:3306"
     environment:
@@ -31,9 +30,8 @@ services:
       retries: 10
       start_period: 10s
   web:
-    image: wolxxxy/php84:latest
+    image: wolxxxy/php85:latest
     restart: always
-    container_name: "rfctool-web"
     depends_on:
       mysql:
         condition: service_healthy
@@ -58,4 +56,3 @@ services:
 
 networks:
   rfctool-network:
-    name: "rfctool-network"
