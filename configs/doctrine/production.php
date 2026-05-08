@@ -12,8 +12,8 @@ return [
     'password'      => 'root',
     'dbname'        => $dbName,
     'port'          => '3306',
-    'charset'       => 'utf8',
+    'charset'       => 'utf8mb4',
     'driverOptions' => [
-        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+        \PDO\Mysql::ATTR_INIT_COMMAND => 'SET NAMES utf8mb4',
     ],
 ];
