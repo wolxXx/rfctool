@@ -1,0 +1,15 @@
+/.env
+/app.log
+/doctrineConfiguration.php
+/stan.log
+/structure.dump
+/test/testdocs.html
+
+
+/.idea/
+/cache
+/docker-volumes/backups
+/public/vendor
+/test/.phpunit.cache
+/test/coverage
+/vendor/

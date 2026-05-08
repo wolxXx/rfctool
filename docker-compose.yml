@@ -1,0 +1,58 @@
+volumes:
+  vol-database-mariadb:
+    name: "rfctool-mariadb-volume"
+
+services:
+  mysql:
+    image: mariadb:11
+    platform: linux/amd64
+    security_opt:
+      - "seccomp=unconfined"
+    restart: always
+    ports:
+      - "127.0.0.1:${DB_PORT}:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_USER: root
+      MARIADB_PASSWORD: root
+    volumes:
+      - vol-database-mariadb:/var/lib/mysql/
+      - ./docker-volumes/mysql/conf.d:/etc/mysql/conf.d
+      - ./docker-volumes/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./docker-volumes/mysql/client.cnf:/etc/mysql/client.cnf
+      - ./docker-volumes/mysql/initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - rfctool-network
+    healthcheck:
+      test: [ "CMD", "mariadb-admin", "--defaults-file=/etc/mysql/client.cnf", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+  web:
+    image: wolxxxy/php85:latest
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./docker-volumes/backups:/var/www/backups
+      - ./docker-volumes/home:/home/docker
+      - ./docker-volumes/scripts/init-app:/usr/local/bin/init-app
+      - ./docker-volumes/mysql/imports:/var/imports
+      - ./docker-volumes/mysql/exports:/var/exports
+      - ./docker-volumes/mysql/client.cnf:/etc/mysql/conf.d/client.cnf
+      - ./docker-volumes/apache/conf:/etc/apache2/sites-available/000-default.conf
+      - ./docker-volumes/apache/phpxdebugEnabled.ini:/etc/php/8.4/apache2/conf.d/80-xdebuglocal.ini
+      - ./docker-volumes/nfs:/nfs
+      - ./:/var/www
+      - ./docker-volumes/logs/xdebug:/tmp/xdebug/
+    ports:
+      - "127.0.0.1:${WEB_PORT}:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - rfctool-network
+
+networks:
+  rfctool-network:

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         bootstrap="Bootstrap.php"
+         colors="true"
+         backupGlobals="false"
+         processIsolation="false"
+         stopOnError="false"
+         stopOnFailure="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         defaultTimeLimit="100"
+         timeoutForSmallTests="100"
+         timeoutForMediumTests="100"
+         timeoutForLargeTests="100"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
+         cacheDirectory=".phpunit.cache"
+         backupStaticProperties="true">
+    <testsuites>
+        <testsuite name="Test">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+    <extensions>
+        <bootstrap class="Ergebnis\PHPUnit\SlowTestDetector\Extension">
+            <parameter name="maximum-count" value="20"/>
+            <parameter name="maximum-duration" value="5000"/>
+        </bootstrap>
+    </extensions>
+    <php>
+        <ini name="zend.enable_gc" value="1"/>
+        <ini name="zend.exception_ignore_args" value="1"/>
+    </php>
+    <source>
+        <include>
+            <directory suffix=".php">../src</directory>
+        </include>
+        <exclude>
+            <directory>../backups/</directory>
+            <directory>../bin/</directory>
+            <directory>../configs/</directory>
+            <directory>../docker-volumes/</directory>
+            <directory>../public/</directory>
+            <directory>../scripts/</directory>
+            <directory>../vendor/</directory>
+            <directory>../views/</directory>
+            <directory>../doctrineBootstrap.php</directory>
+            <directory>../doctrineConfig.php</directory>
+        </exclude>
+    </source>
+</phpunit>
